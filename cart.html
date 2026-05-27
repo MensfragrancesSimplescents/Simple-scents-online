@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Simple Scents</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 28px 18px 120px;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .back {
+      background: #fff;
+      color: #000;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+    }
+
+    .item {
+      background: #111;
+      border: 1px solid #262626;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .cart-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item h2 {
+      font-size: 22px;
+      margin: 0 0 8px;
+    }
+
+    .item p {
+      color: #cfcfcf;
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .trash {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: #e00000;
+      color: #fff;
+      font-size: 23px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .trash:active {
+      transform: scale(0.96);
+      background: #b90000;
+    }
+
+    .empty {
+      color: #bbb;
+      font-size: 22px;
+      line-height: 1.4;
+      margin-top: 40px;
+    }
+
+    .bottom {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,.94);
+      border-top: 1px solid rgba(255,255,255,.14);
+      padding: 14px 18px 24px;
+    }
+
+    .checkout {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      background: #fff;
+      color: #000;
+      font-size: 20px;
+      font-weight: 900;
+      padding: 17px;
+    }
+
+    .clear {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>Your Cart</h1>
+    <a class="back" href="index.html">Shop</a>
+  </div>
+
+  <div id="cart"></div>
+
+  <div class="bottom">
+    <button class="checkout" onclick="checkout()">Checkout</button>
+    <button class="clear" onclick="clearCart()">Clear Cart</button>
+  </div>
+
+  <script>
+    const cartBox = document.getElementById("cart");
+    let cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+
+    function renderCart() {
+      if (!cart.length) {
+        cartBox.innerHTML = '<div class="empty">Your cart is empty.<br>Go back to shop and add a fragrance sample.</div>';
+        return;
+      }
+
+      let total = 0;
+      cartBox.innerHTML = cart.map((item, index) => {
+        const price = Number(item.price || 0);
+        total += price;
+        return `
+          <div class="item cart-item">
+            <div class="cart-info">
+              <h2>${item.name}</h2>
+              <p>$${price.toFixed(2)} • ${item.size || "2ml sample"}</p>
+            </div>
+            <button class="trash" onclick="removeItem(${index})" aria-label="Remove ${item.name} from cart">🗑</button>
+          </div>
+        `;
+      }).join("") + `
+        <div class="item">
+          <h2>Total</h2>
+          <p>$${total.toFixed(2)}</p>
+        </div>
+      `;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("simpleScentsCart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem("simpleScentsCart");
+      location.reload();
+    }
+
+    function checkout() {
+      window.location.href = "https://www.paypal.com/";
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+HOW TO ADD THE VIEW CART BUTTON
+
+1. Upload these two files to GitHub:
+   cart.html
+   view-cart-button.js
+
+2. Open index.html.
+
+3. At the very bottom, right before:
+   </body>
+
+4. Paste this:
+   <script src="view-cart-button.js"></script>
+
+5. Commit changes.
+
+After that, the top-right Shop button on the homepage will become View Cart.
