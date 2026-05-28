@@ -1,0 +1,14 @@
+
+ADD THIS TO EVERY PRODUCT PAGE:
+- cremo.html
+- invictus.html
+- ysl.html
+- jpg-le-male.html
+- jpg-le-beau.html
+- nautica-voyage.html
+- acqua-di-gio.html
+- prada-ocean.html
+- etc.
+
+Paste the HTML snippet ABOVE the fragrance title on each page.
+Paste the CSS into your main stylesheet or inside <style>.
