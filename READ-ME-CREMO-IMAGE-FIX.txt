@@ -1,0 +1,15 @@
+Upload this file to your GitHub website folder:
+
+cremo-image-fix.js
+
+Then add this line near the bottom of cremo.html, right above </body>:
+
+<script src="cremo-image-fix.js"></script>
+
+Your two Cremo pictures must be uploaded with these EXACT names:
+
+cremo-spice-black-vanilla-handheld.jpg
+cremo-spice-black-vanilla-normal.jpg
+
+The first image will be handheld Cremo.
+The second image will be normal Cremo.

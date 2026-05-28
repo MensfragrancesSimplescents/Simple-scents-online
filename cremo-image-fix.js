@@ -1,42 +1,24 @@
-// Upload this as cremo-image-fix.js and add this before </body> on cremo-spice-black-vanilla.html:
-// <script src="cremo-image-fix.js"></script>
-
+// Cremo image fix: first photo = handheld Cremo, second photo = normal Cremo
 (function () {
-  const pageTitle = (document.title + " " + (document.querySelector("h1")?.innerText || "")).toLowerCase();
-  if (!pageTitle.includes("cremo") || !pageTitle.includes("black vanilla")) return;
+  const pageText = document.body.innerText.toLowerCase();
+  const isCremoPage =
+    pageText.includes("cremo spice") ||
+    window.location.pathname.toLowerCase().includes("cremo");
 
-  if (!document.querySelector(".back-button")) {
-    const back = document.createElement("a");
-    back.className = "back-button";
-    back.href = "index.html";
-    back.setAttribute("aria-label", "Back to shop");
-    back.innerHTML = "‹";
-    document.body.insertBefore(back, document.body.firstChild);
+  if (!isCremoPage) return;
+
+  const imageNames = [
+    "cremo-spice-black-vanilla-handheld.jpg",
+    "cremo-spice-black-vanilla-normal.jpg"
+  ];
+
+  const imgs = document.querySelectorAll(".slide img, .swipe img, img");
+
+  if (imgs.length >= 2) {
+    imgs[0].src = imageNames[0];
+    imgs[0].alt = "Cremo Spice & Black Vanilla handheld photo";
+
+    imgs[1].src = imageNames[1];
+    imgs[1].alt = "Cremo Spice & Black Vanilla normal photo";
   }
-
-  const style = document.createElement("style");
-  style.innerHTML = `
-    body { padding-top: 28px !important; }
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 46px;
-      height: 46px;
-      border-radius: 999px;
-      background: #1f1f1f;
-      border: 1px solid rgba(255,255,255,.25);
-      color: #fff;
-      text-decoration: none;
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      line-height: 1;
-    }
-  `;
-  document.head.appendChild(style);
-
-  const imgs = Array.from(document.querySelectorAll(".carousel img, .gallery img, img"));
-  if (imgs[0]) imgs[0].src = "cremo-spice-black-vanilla-handheld.jpg";
-  if (imgs[1]) imgs[1].src = "cremo-spice-black-vanilla-close.jpg";
 })();
