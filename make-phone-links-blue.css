@@ -1,0 +1,12 @@
+
+/* Make ALL phone numbers blue like iPhone links */
+a[href^="tel"],
+a[x-apple-data-detectors],
+[x-apple-data-detectors],
+.apple-data-detectors,
+.apple-data-detectors a {
+  color: #0A84FF !important;
+  text-decoration: underline !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}

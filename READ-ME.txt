@@ -1,6 +1,4 @@
 
-1. Add the META line inside the <head> section of every fragrance page.
-2. Add the CSS into your main style.css file or inside a <style> tag.
-3. Save and upload to GitHub.
+Upload the CSS file to your website and replace the old one.
 
-This removes the blue iPhone phone-number highlighting.
+Use the HTML example anywhere you want the phone number to appear blue/clickable.
