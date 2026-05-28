@@ -1,0 +1,83 @@
+<!-- Fresh Designer Bundle - Pacific Rock Moss + Prada Ocean + JPG Le Beau - $19.99 -->
+<style>
+  .bundle-card{background:#111;color:white;border-radius:18px;padding:18px;box-shadow:0 8px 25px rgba(0,0,0,.25);max-width:340px;margin:20px auto;font-family:Arial,sans-serif;cursor:pointer}.bundle-main-img{width:100%;height:260px;object-fit:cover;border-radius:14px}.bundle-thumbs{display:flex;gap:8px;margin-top:8px}.bundle-thumbs img{width:33%;height:75px;object-fit:cover;border-radius:10px}.bundle-card h3{margin:14px 0 6px}.bundle-card p{color:#ddd;line-height:1.4}.bundle-price{font-size:24px;font-weight:700;color:#fff}.add-to-cart{width:100%;border:0;border-radius:12px;padding:14px;background:#0b64ff;color:white;font-size:16px;font-weight:700}.bundle-modal{display:none;position:fixed;z-index:9999;inset:0;background:rgba(0,0,0,.92);color:white;font-family:Arial,sans-serif}.bundle-modal.open{display:flex;flex-direction:column}.bundle-close{position:absolute;top:15px;right:18px;font-size:34px;background:none;border:0;color:white}.bundle-gallery{flex:1;display:flex;align-items:center;justify-content:center;padding:55px 18px 145px}.bundle-gallery img{max-width:100%;max-height:70vh;border-radius:16px;object-fit:contain}.bundle-arrow{position:absolute;top:45%;background:rgba(255,255,255,.2);border:0;color:white;font-size:36px;border-radius:999px;width:48px;height:48px}.bundle-prev{left:12px}.bundle-next{right:12px}.bundle-bottom{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:12px 16px}.bundle-bottom h3{margin:0 0 4px}.bundle-bottom p{margin:0 0 8px;color:#ccc}.bundle-bottom-row{display:flex;gap:10px;align-items:center}.bundle-contact,.bundle-bottom-cart{flex:1;border:0;border-radius:12px;padding:13px;color:white;font-weight:700;text-align:center;text-decoration:none}.bundle-contact{background:#333}.bundle-bottom-cart{background:#0b64ff}.bundle-dots{text-align:center;margin-top:6px;color:#aaa}
+</style>
+
+<div class="bundle-card" onclick="openBundleGallery()">
+  <img class="bundle-main-img" src="images/pacific-rock-moss-bundle.jpg" alt="Pacific Rock Moss bottle">
+  <div class="bundle-thumbs">
+    <img src="images/pacific-rock-moss-bundle.jpg" alt="Pacific Rock Moss">
+    <img src="images/prada-ocean-bundle.jpg" alt="Prada Luna Rossa Ocean">
+    <img src="images/jpg-le-beau-bundle.jpg" alt="JPG Le Beau">
+  </div>
+  <h3>Fresh Designer Bundle</h3>
+  <p>Pacific Rock Moss, Prada Luna Rossa Ocean, and JPG Le Beau. Three 2ml samples.</p>
+  <div class="bundle-price">$19.99</div>
+  <button class="add-to-cart" onclick="event.stopPropagation(); addFreshBundleToCart();">Add to Cart</button>
+</div>
+
+<div id="bundleModal" class="bundle-modal">
+  <button class="bundle-close" onclick="closeBundleGallery()">×</button>
+  <button class="bundle-arrow bundle-prev" onclick="changeBundlePhoto(-1)">‹</button>
+  <div class="bundle-gallery" id="bundleSwipeArea">
+    <img id="bundleGalleryImage" src="images/pacific-rock-moss-bundle.jpg" alt="Fresh Designer Bundle photo">
+  </div>
+  <button class="bundle-arrow bundle-next" onclick="changeBundlePhoto(1)">›</button>
+  <div class="bundle-bottom">
+    <h3>Fresh Designer Bundle</h3>
+    <p>Pacific Rock Moss + Prada Luna Rossa Ocean + JPG Le Beau — 3 x 2ml samples — $19.99</p>
+    <div class="bundle-bottom-row">
+      <a class="bundle-contact" href="mailto:graythered4545@gmail.com">Contact</a>
+      <button class="bundle-bottom-cart" onclick="addFreshBundleToCart()">Add to Cart</button>
+    </div>
+    <div class="bundle-dots" id="bundleDots">1 / 3</div>
+  </div>
+</div>
+
+<script>
+  const freshBundlePhotos = [
+    'images/pacific-rock-moss-bundle.jpg',
+    'images/prada-ocean-bundle.jpg',
+    'images/jpg-le-beau-bundle.jpg'
+  ];
+  let freshBundleIndex = 0;
+
+  function openBundleGallery(){
+    document.getElementById('bundleModal').classList.add('open');
+    showBundlePhoto();
+  }
+  function closeBundleGallery(){
+    document.getElementById('bundleModal').classList.remove('open');
+  }
+  function changeBundlePhoto(direction){
+    freshBundleIndex = (freshBundleIndex + direction + freshBundlePhotos.length) % freshBundlePhotos.length;
+    showBundlePhoto();
+  }
+  function showBundlePhoto(){
+    document.getElementById('bundleGalleryImage').src = freshBundlePhotos[freshBundleIndex];
+    document.getElementById('bundleDots').textContent = (freshBundleIndex + 1) + ' / ' + freshBundlePhotos.length;
+  }
+  function addFreshBundleToCart(){
+    const item = {
+      name: 'Fresh Designer Bundle',
+      price: 19.99,
+      image: 'images/pacific-rock-moss-bundle.jpg',
+      quantity: 1,
+      includes: ['Pacific Rock Moss 2ml', 'Prada Luna Rossa Ocean 2ml', 'JPG Le Beau 2ml']
+    };
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Fresh Designer Bundle added to cart!');
+  }
+
+  let bundleStartX = 0;
+  document.getElementById('bundleSwipeArea').addEventListener('touchstart', function(e){
+    bundleStartX = e.touches[0].clientX;
+  });
+  document.getElementById('bundleSwipeArea').addEventListener('touchend', function(e){
+    const endX = e.changedTouches[0].clientX;
+    if(bundleStartX - endX > 40) changeBundlePhoto(1);
+    if(endX - bundleStartX > 40) changeBundlePhoto(-1);
+  });
+</script>
