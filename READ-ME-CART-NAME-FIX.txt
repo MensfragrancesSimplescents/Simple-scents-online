@@ -1,0 +1,8 @@
+Upload BOTH files into your GitHub website folder and replace existing files if it asks.
+
+Files:
+- cart-buttons-all-pages.js
+- cart-buttons.js
+
+After uploading, clear your cart once. Old cart items already saved as "Simple Scents" will stay wrong until cleared.
+New items will show the correct fragrance name.
