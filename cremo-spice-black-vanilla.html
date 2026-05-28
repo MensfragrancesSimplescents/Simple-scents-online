@@ -10,20 +10,37 @@
       color: #fff;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 38px 18px;
+      padding: 28px 18px 130px;
       overflow-x: hidden;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: #1f1f1f;
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff;
+      text-decoration: none;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1;
     }
 
     h1 {
       font-size: 44px;
       line-height: 1.1;
       margin: 0 0 24px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .price {
       font-size: 28px;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 28px;
     }
 
@@ -44,8 +61,8 @@
     }
 
     .carousel img {
-      flex: 0 0 86%;
-      width: 86%;
+      flex: 0 0 88%;
+      width: 88%;
       height: 360px;
       object-fit: cover;
       border-radius: 24px;
@@ -59,14 +76,11 @@
       margin-top: 8px;
       text-align: center;
     }
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
   </style>
 </head>
 <body>
+
+  <a class="back-button" href="index.html" aria-label="Back to shop">‹</a>
 
   <h1>Cremo Spice &amp;<br>Black Vanilla</h1>
 
@@ -78,11 +92,11 @@
 
   <div class="carousel">
     <img src="cremo-spice-black-vanilla-handheld.jpg" alt="Cremo Spice & Black Vanilla handheld photo">
-    <img src="cremo-spice-black-vanilla-close.jpg" alt="Cremo Spice & Black Vanilla close photo">
+    <img src="cremo-spice-black-vanilla-close.jpg" alt="Cremo Spice & Black Vanilla bottle photo">
   </div>
 
   <div class="hint">Swipe sideways to see photos</div>
 
-<script src="cart-buttons 2.js"></script><script src="cart-buttons-all-pages.js"></script>
+  <script src="cart-buttons.js"></script>
 </body>
 </html>

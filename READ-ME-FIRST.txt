@@ -1,17 +1,13 @@
-HOW TO ADD THE VIEW CART BUTTON
+FIX CREMO PAGE
 
-1. Upload these two files to GitHub:
-   cart.html
-   view-cart-button.js
+Upload these files to GitHub:
+1. cremo-spice-black-vanilla.html
+2. cremo-image-fix.js
 
-2. Open index.html.
+IMPORTANT: Your 2 Cremo photos must be named exactly:
+cremo-spice-black-vanilla-handheld.jpg
+cremo-spice-black-vanilla-close.jpg
 
-3. At the very bottom, right before:
-   </body>
+If your Cremo pictures are still wrong, delete the wrong Aqua Di Gio / 9PM pictures from this product and upload the real Cremo photos with the two names above.
 
-4. Paste this:
-   <script src="view-cart-button.js"></script>
-
-5. Commit changes.
-
-After that, the top-right Shop button on the homepage will become View Cart.
+This adds the back button and makes the Cremo page use only the Cremo image filenames.
