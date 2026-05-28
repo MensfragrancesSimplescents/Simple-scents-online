@@ -1,0 +1,12 @@
+
+/* Disable automatic iPhone phone-number blue links */
+a[href^="tel"] {
+  color: #d1d1d1 !important;
+  text-decoration: none !important;
+  pointer-events: none !important;
+}
+
+/* Prevent iOS auto-detection styling */
+body {
+  -webkit-touch-callout: none;
+}
