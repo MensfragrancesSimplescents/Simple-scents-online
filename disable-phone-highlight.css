@@ -1,0 +1,23 @@
+/* Strong iPhone/Safari phone number auto-link fix */
+a[href^="tel"],
+a[x-apple-data-detectors],
+[x-apple-data-detectors],
+.apple-data-detectors,
+.apple-data-detectors a {
+  color: #d1d1d1 !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Keep the USA box text normal */
+.info-box,
+.notice,
+.policy-box,
+.usa-box,
+.product-notice {
+  color: #d1d1d1 !important;
+}

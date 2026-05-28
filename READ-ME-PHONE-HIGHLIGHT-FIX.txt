@@ -1,0 +1,15 @@
+Upload BOTH files to your GitHub website folder.
+
+Files:
+1. disable-phone-highlight.css
+2. disable-phone-highlight.js
+
+Then add this line right before </body> on each product page, especially cremo.html:
+
+<script src="disable-phone-highlight.js"></script>
+
+Also add this inside <head> if you can:
+
+<meta name="format-detection" content="telephone=no">
+
+If it still looks blue after saving, clear Safari cache or open the site in a private tab.
