@@ -47,47 +47,69 @@
     }
 
     .cart-item {
-      position: relative;
-      display: block;
-      min-height: 145px;
-      padding-right: 78px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 138px 54px;
+      align-items: center;
+      gap: 12px;
+      min-height: 118px;
     }
 
     .cart-info {
-      max-width: 56%;
       min-width: 0;
     }
 
     .item h2 {
       font-size: 22px;
-      margin: 0 0 8px;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
     }
 
     .item p {
       color: #cfcfcf;
       margin: 0;
       font-size: 18px;
+      line-height: 1.25;
     }
 
     .qty-box{
-      position:absolute;
-      left:135px;
-      bottom:14px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
-      width:150px;
+      gap:8px;
+      width:118px;
+      justify-self:center;
       background:#111;
       border:1px solid #444;
-      border-radius:16px;
-      padding:8px 12px;
+      border-radius:15px;
+      padding:6px 9px;
     }
-    .qty-btn{width:34px;height:34px;border:none;border-radius:50%;background:#222;color:#fff;font-size:22px;font-weight:bold;line-height:1;}
-    .qty-num{min-width:22px;text-align:center;font-weight:bold;font-size:20px;}
-.trash {
-      width: 48px;
-      height: 48px;
+
+    .qty-btn{
+      width:31px;
+      height:31px;
+      border:none;
+      border-radius:50%;
+      background:#222;
+      color:#fff;
+      font-size:20px;
+      font-weight:bold;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .qty-num{
+      min-width:20px;
+      text-align:center;
+      font-weight:bold;
+      font-size:20px;
+    }
+
+    .trash {
+      width: 50px;
+      height: 50px;
       border: none;
       border-radius: 999px;
       background: #e00000;
@@ -97,15 +119,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
       cursor: pointer;
+      justify-self: end;
     }
 
     .trash:active {
-      transform: translateY(-50%) scale(0.96);
+      transform: scale(0.96);
       background: #b90000;
     }
 
@@ -150,15 +169,27 @@
     }
 
     @media (max-width: 430px) {
-      .cart-item { min-height: 150px; padding-right: 74px; }
-      .cart-info { max-width: 58%; }
-      .qty-box { left: 126px; bottom: 14px; width: 146px; }
-      .trash { right: 16px; }
+      body { padding-left: 16px; padding-right: 16px; }
+      .cart-item {
+        grid-template-columns: minmax(0, 1fr) 126px 50px;
+        gap: 8px;
+        min-height: 112px;
+        padding: 14px 16px;
+      }
+      .item h2 { font-size: 21px; }
+      .item p { font-size: 17px; }
+      .qty-box { width: 108px; padding: 5px 8px; }
+      .qty-btn { width: 29px; height: 29px; font-size: 19px; }
+      .trash { width: 48px; height: 48px; }
     }
 
     @media (max-width: 370px) {
-      .qty-box { left: 112px; width: 138px; }
-      .qty-btn { width: 32px; height: 32px; }
+      .cart-item { grid-template-columns: minmax(0, 1fr) 112px 46px; gap: 6px; }
+      .item h2 { font-size: 19px; }
+      .item p { font-size: 16px; }
+      .qty-box { width: 98px; }
+      .qty-btn { width: 27px; height: 27px; }
+      .trash { width: 44px; height: 44px; }
     }
   </style>
 </head>
