@@ -43,13 +43,30 @@
     localStorage.setItem("simpleScentsCart", JSON.stringify(cart));
   }
 
+  function sameProduct(a, b) {
+    return String(a.name || "").trim().toLowerCase() === String(b.name || "").trim().toLowerCase();
+  }
+
   function addToCart() {
-    cart.push({
+    const product = {
       name: title,
       price: price,
       size: "2ml sample",
-      page: window.location.pathname
-    });
+      page: window.location.pathname,
+      qty: 1
+    };
+
+    const existingItem = cart.find(item => sameProduct(item, product));
+
+    if (existingItem) {
+      existingItem.qty = (existingItem.qty || 1) + 1;
+      existingItem.price = product.price;
+      existingItem.size = product.size;
+      existingItem.page = product.page;
+    } else {
+      cart.push(product);
+    }
+
     saveCart();
     alert(title + " added to cart.");
   }

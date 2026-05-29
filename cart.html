@@ -210,6 +210,33 @@
     const cartBox = document.getElementById("cart");
     let cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
 
+    function sameProduct(a, b) {
+      return String(a.name || "").trim().toLowerCase() === String(b.name || "").trim().toLowerCase();
+    }
+
+    function combineMatchingItems() {
+      const combined = [];
+
+      cart.forEach(item => {
+        const qty = item.qty || 1;
+        const match = combined.find(existing => sameProduct(existing, item));
+
+        if (match) {
+          match.qty = (match.qty || 1) + qty;
+          match.price = item.price || match.price;
+          match.size = item.size || match.size;
+          match.page = item.page || match.page;
+        } else {
+          combined.push({ ...item, qty });
+        }
+      });
+
+      cart = combined;
+      localStorage.setItem("simpleScentsCart", JSON.stringify(cart));
+    }
+
+    combineMatchingItems();
+
     function renderCart() {
       if (!cart.length) {
         cartBox.innerHTML = '<div class="empty">Your cart is empty.<br>Go back to shop and add a fragrance sample.</div>';
