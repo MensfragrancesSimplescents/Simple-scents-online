@@ -1,0 +1,2 @@
+Fixed the top header so Simple Scents, the subtitle, and the cart button do not overlap on phones.
+Upload/replace all files in GitHub with this zip.

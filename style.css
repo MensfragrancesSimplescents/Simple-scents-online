@@ -55,3 +55,96 @@ img{display:block;max-width:100%}
 .brand p{font-size:14px!important;line-height:1.2!important;color:#aaa!important;margin:6px 0 0!important;white-space:nowrap}
 .shop{background:#fff;color:#000!important;text-decoration:none;border-radius:999px;font-weight:900;font-size:18px;padding:14px 22px;line-height:1;flex:0 0 auto}
 @media(max-width:380px){.brand h1{font-size:23px!important}.brand p{font-size:12px!important}.logo{width:52px;height:52px}.shop{font-size:16px;padding:13px 18px}.header{padding:12px 14px}}
+
+/* HEADER OVERLAP FIX - keeps logo, Simple Scents text, and cart button from covering each other */
+.header{
+  width:100%;
+  max-width:100vw;
+  overflow:hidden;
+}
+.header .brand{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+}
+.header .brand > div{
+  min-width:0 !important;
+  overflow:hidden !important;
+}
+.header .brand h1,
+.header .brand p{
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  max-width:100% !important;
+}
+.header .shop{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+  text-align:center !important;
+}
+
+@media(max-width:520px){
+  .header{
+    padding:12px 14px !important;
+    gap:8px !important;
+  }
+  .logo{
+    width:50px !important;
+    height:50px !important;
+    border-radius:12px !important;
+  }
+  .brand{
+    gap:10px !important;
+  }
+  .brand h1{
+    font-size:clamp(19px, 6vw, 24px) !important;
+    letter-spacing:-0.5px !important;
+  }
+  .brand p{
+    font-size:clamp(10px, 3.25vw, 13px) !important;
+    margin-top:4px !important;
+  }
+  .shop{
+    font-size:clamp(14px, 4.2vw, 17px) !important;
+    padding:12px 15px !important;
+    min-width:auto !important;
+  }
+}
+
+@media(max-width:390px){
+  .header{
+    padding:10px 12px !important;
+    gap:7px !important;
+  }
+  .logo{
+    width:44px !important;
+    height:44px !important;
+  }
+  .brand{
+    gap:8px !important;
+  }
+  .brand h1{
+    font-size:20px !important;
+  }
+  .brand p{
+    font-size:10.5px !important;
+  }
+  .shop{
+    font-size:14px !important;
+    padding:10px 12px !important;
+  }
+}
+
+@media(max-width:340px){
+  .brand p{
+    display:none !important;
+  }
+  .brand h1{
+    font-size:18px !important;
+  }
+  .shop{
+    font-size:13px !important;
+    padding:9px 10px !important;
+  }
+}
