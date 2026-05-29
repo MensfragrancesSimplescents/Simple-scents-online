@@ -1,0 +1,1 @@
+This version uses your current ZIP. It moves the quantity +/- box lower and more centered under the item text, makes the cart item box shorter, and keeps the trash button on the right. It also keeps the homepage/cart swipe text removed.
