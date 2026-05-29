@@ -1,0 +1,5 @@
+Fixed files included:
+- index.html: removed the bottom "Swipe to see all images" text.
+- cart.html: removed the bottom "Swipe to see all images" text and moved the quantity +/- button lower in the cart item box.
+
+Upload the whole folder/ZIP to GitHub and replace the old files when asked.
