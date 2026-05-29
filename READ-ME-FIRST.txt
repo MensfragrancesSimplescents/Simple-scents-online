@@ -1,13 +1,26 @@
-FIX CREMO PAGE
+WHAT THIS FIX DOES
 
-Upload these files to GitHub:
-1. cremo-spice-black-vanilla.html
-2. cremo-image-fix.js
+1. Removes the text "Swipe to see all images" from:
+   - the cart page
+   - the bottom of the homepage
 
-IMPORTANT: Your 2 Cremo photos must be named exactly:
-cremo-spice-black-vanilla-handheld.jpg
-cremo-spice-black-vanilla-close.jpg
+2. Moves the cart quantity button lower, into the empty square area you marked.
 
-If your Cremo pictures are still wrong, delete the wrong Aqua Di Gio / 9PM pictures from this product and upload the real Cremo photos with the two names above.
+HOW TO USE IT
 
-This adds the back button and makes the Cremo page use only the Cremo image filenames.
+1. Upload this file to GitHub:
+   simple-scents-cart-homepage-fix.js
+
+2. Open index.html and paste this right before </body>:
+   <script src="simple-scents-cart-homepage-fix.js"></script>
+
+3. Open cart.html and paste the same line right before </body>:
+   <script src="simple-scents-cart-homepage-fix.js"></script>
+
+4. Commit changes.
+
+If the quantity button needs to go a little more down, open the JS file and change:
+translateY(48px)
+
+to:
+translateY(60px)
