@@ -46,3 +46,12 @@ img{display:block;max-width:100%}
 }
 .info p { margin: 0; }
 .info strong { color: #d8d8d8; font-weight: 900; }
+
+/* Simple Scents top header - same on every fragrance page */
+.header{position:sticky;top:0;z-index:999;background:#050505;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #222;box-shadow:none;gap:12px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff;min-width:0}
+.logo{width:58px;height:58px;border-radius:14px;background:#fff;object-fit:cover;flex:0 0 auto}
+.brand h1{font-size:26px!important;line-height:1!important;margin:0!important;font-weight:900!important;color:#fff!important;white-space:nowrap}
+.brand p{font-size:14px!important;line-height:1.2!important;color:#aaa!important;margin:6px 0 0!important;white-space:nowrap}
+.shop{background:#fff;color:#000!important;text-decoration:none;border-radius:999px;font-weight:900;font-size:18px;padding:14px 22px;line-height:1;flex:0 0 auto}
+@media(max-width:380px){.brand h1{font-size:23px!important}.brand p{font-size:12px!important}.logo{width:52px;height:52px}.shop{font-size:16px;padding:13px 18px}.header{padding:12px 14px}}
