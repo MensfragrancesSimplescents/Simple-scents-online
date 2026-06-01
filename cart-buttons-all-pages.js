@@ -71,9 +71,16 @@
     alert(title + " added to cart.");
   }
 
-  function buyNow() {
-    addToCart();
-    window.location.href = "cart.html";
+  function buyNow(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // IMPORTANT: Buy Now goes straight to checkout.
+    // It does NOT add this item to the cart and it does NOT open cart.html.
+    const checkoutLink = "https://www.paypal.com/";
+    window.location.href = checkoutLink;
   }
 
   if (document.querySelector(".ss-bottom-bar")) return;
@@ -131,7 +138,7 @@
   const buyBtn = document.createElement("button");
   buyBtn.className = "ss-buy";
   buyBtn.innerText = "Buy Now";
-  buyBtn.onclick = buyNow;
+  buyBtn.addEventListener("click", buyNow);
 
   bar.appendChild(addBtn);
   bar.appendChild(buyBtn);

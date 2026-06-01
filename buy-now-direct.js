@@ -5,7 +5,7 @@
    3) Replace YOUR_PAYPAL_CHECKOUT_LINK below with your real PayPal checkout/payment link.
 */
 
-const DIRECT_CHECKOUT_LINK = "YOUR_PAYPAL_CHECKOUT_LINK";
+const DIRECT_CHECKOUT_LINK = "https://www.paypal.com/";
 
 function getCurrentProductName() {
   const possibleTitle = document.querySelector("h1, .product-title, .details-title, .item-title");
@@ -18,11 +18,6 @@ function getCurrentProductPrice() {
 }
 
 function openDirectCheckout() {
-  if (!DIRECT_CHECKOUT_LINK || DIRECT_CHECKOUT_LINK === "YOUR_PAYPAL_CHECKOUT_LINK") {
-    alert("Add your PayPal checkout link inside buy-now-direct.js first.");
-    return;
-  }
-
   const product = encodeURIComponent(getCurrentProductName());
   const price = encodeURIComponent(getCurrentProductPrice());
   const separator = DIRECT_CHECKOUT_LINK.includes("?") ? "&" : "?";

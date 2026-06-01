@@ -104,7 +104,7 @@
   const buyBtn = document.createElement("button");
   buyBtn.className = "ss-buy";
   buyBtn.innerText = "Buy Now";
-  buyBtn.onclick = buyNow;
+  buyBtn.addEventListener("click", buyNow);
 
   bar.appendChild(addBtn);
   bar.appendChild(buyBtn);
