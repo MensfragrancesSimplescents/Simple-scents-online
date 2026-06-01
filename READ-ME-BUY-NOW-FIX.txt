@@ -1,0 +1,16 @@
+Buy Now fix
+
+This zip changes the Buy Now button so it:
+- does NOT add the fragrance to the cart
+- does NOT show the "added to cart" popup
+- does NOT open cart.html
+- goes straight to PayPal checkout/page instead
+
+Upload/replace these files in GitHub:
+- cart-buttons-all-pages.js
+- cart-buttons.js
+- cart-buttons 2.js
+- buy-now-direct.js
+
+Right now the checkout link is set to https://www.paypal.com/
+When you get your real PayPal payment/checkout link, replace that link inside cart-buttons-all-pages.js with your real link.
