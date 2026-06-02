@@ -1,15 +1,19 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"><style>
+.checkout-form label{font-size:22px;}
+.checkout-input{width:185px;max-width:48vw;height:32px;border-radius:9px;border:none;padding:4px 8px;font-size:16px;}
+@media(max-width:430px){.checkout-input{width:170px;max-width:46vw;height:30px;}.checkout-form label{font-size:21px;}}
+</style></head><body>
 <header class="header"><a class="brand" href="index.html"><h1>Simple Scents</h1></a></header>
 <main class="product-page">
 <h1>Checkout</h1>
-<form>
-<label>Email or Phone Number</label><input type="text" required style="max-width:220px;"><br><br>
-<label>First Name</label><input type="text" required style="max-width:220px;"><br><br>
-<label>Last Name</label><input type="text" required style="max-width:220px;"><br><br>
-<label>Address</label><input type="text" required style="max-width:220px;"><br><br>
-<label>Street Name</label><input type="text" required style="max-width:220px;"><br><br>
-<label>City</label><input type="text" required style="max-width:220px;"><br><br>
-<label>State</label><input type="text" required style="max-width:220px;"><br><br>
-<label>ZIP Code</label><input type="text" required style="max-width:220px;"><br><br>
+<form class="checkout-form">
+<label>Email or Phone Number</label><input type="text" required class="checkout-input"><br><br>
+<label>First Name</label><input type="text" required class="checkout-input"><br><br>
+<label>Last Name</label><input type="text" required class="checkout-input"><br><br>
+<label>Address</label><input type="text" required class="checkout-input"><br><br>
+<label>Street Name</label><input type="text" required class="checkout-input"><br><br>
+<label>City</label><input type="text" required class="checkout-input"><br><br>
+<label>State</label><input type="text" required class="checkout-input"><br><br>
+<label>ZIP Code</label><input type="text" required class="checkout-input"><br><br>
 <button type="submit">Pay with PayPal</button>
 </form></main><script src="checkout-redirect.js"></script></body></html>

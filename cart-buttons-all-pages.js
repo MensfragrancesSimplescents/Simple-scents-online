@@ -77,10 +77,9 @@
       event.stopPropagation();
     }
 
-    // IMPORTANT: Buy Now goes straight to checkout.
+    // IMPORTANT: Buy Now goes straight to checkout page.
     // It does NOT add this item to the cart and it does NOT open cart.html.
-    const checkoutLink = "https://www.paypal.com/";
-    window.location.href = checkoutLink;
+    window.location.href = "checkout.html";
   }
 
   if (document.querySelector(".ss-bottom-bar")) return;
