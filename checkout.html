@@ -19,7 +19,7 @@ const cart=JSON.parse(localStorage.getItem('simpleScentsCart')||'[]');
 let total=0; cart.forEach(i=>total+=(parseFloat(i.price)||0)*(i.qty||1));
 document.getElementById('orderTotal').textContent='Total: $'+total.toFixed(2);
 document.getElementById('checkoutForm').addEventListener('submit',e=>{
- e.preventDefault();
+ 
  const email=email.value.trim();
  const phone=document.getElementById('phone').value.replace(/\D/g,'');
  const zip=document.getElementById('zip').value.trim();
