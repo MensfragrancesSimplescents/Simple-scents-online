@@ -87,27 +87,12 @@
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
     const PAYPAL_URL = "https://www.paypal.com/";
 
-    const buyNowItem = JSON.parse(localStorage.getItem("simpleScentsBuyNow") || "null");
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
-
-let total = 0;
-
-if (buyNowItem) {
-  total = parseFloat(String(buyNowItem.price).replace(/[^0-9.]/g, "")) || 0;
-} else {
-  const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
-  cart.forEach(item => {
-    total += (parseFloat(item.price) || 0) * (item.qty || 1);
-  });
-}
-
-    // If the customer clicked Buy Now, checkout ONLY that item.
-    // If they came from the cart, checkout the whole cart.
-    const checkoutItems = buyNowItem ? [buyNowItem] : cart;
+    const cart = buyNowItem ? [buyNowItem] : JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
 
     let total = 0;
-    checkoutItems.forEach(item => {
-      total += (parseFloat(item.price) || 0) * (item.qty || 1);
+    cart.forEach(item => {
+      total += (parseFloat(String(item.price).replace(/[^0-9.]/g, "")) || 0) * (item.qty || 1);
     });
     document.getElementById("orderTotal").textContent = "Total: $" + total.toFixed(2);
 
@@ -149,7 +134,7 @@ if (buyNowItem) {
         return;
       }
 
-      const orderItems = checkoutItems.map(item => {
+      const orderItems = cart.map(item => {
         return `${item.name || "Item"} x${item.qty || 1} - $${item.price || "0"}`;
       }).join("\n");
 
@@ -178,7 +163,6 @@ if (buyNowItem) {
         });
 
         if (response.ok) {
-          localStorage.removeItem("simpleScentsBuyNow");
           window.location.href = PAYPAL_URL;
         } else {
           alert("Order info did not send. Check the form and try again.");
