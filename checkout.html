@@ -74,7 +74,9 @@
     <form id="checkoutForm">
       <label>Email</label>
       <input id="email" name="email" type="email" class="checkout-input">
-<div style="text-align:center;font-size:24px;font-weight:bold;margin:10px 0;">OR</div>
+
+      <div style="text-align:center;font-size:24px;font-weight:bold;margin:10px 0;">OR</div>
+
       <label>Phone Number</label>
       <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="10 digits" class="checkout-input">
 
@@ -173,8 +175,8 @@
       }).join("\n");
 
       const orderData = {
-        email: email || "Not provided",
-        phone: phone || "Not provided",
+        contactMethod: hasEmail && hasPhone ? "Email and phone" : hasEmail ? "Email" : "Phone",
+        phone: hasPhone ? phone : "Not provided",
         firstName,
         lastName,
         addressNumber: address,
@@ -185,6 +187,11 @@
         orderTotal: "$" + total.toFixed(2),
         orderItems
       };
+
+      if (hasEmail) {
+        orderData.email = email;
+        orderData._replyto = email;
+      }
 
       try {
         const response = await fetch(FORMSPREE_URL, {
@@ -200,7 +207,8 @@
           localStorage.removeItem("buyNowItem");
           window.location.href = PAYPAL_URL;
         } else {
-          alert("Order info did not send. Check the form and try again.");
+          const errorText = await response.text();
+          alert("Order info did not send. Try using email, or check Formspree.");
         }
       } catch (error) {
         alert("Something went wrong. Try again.");
