@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"><style>
+.checkout-form label{font-size:22px;}
+.checkout-input{width:185px;max-width:48vw;height:32px;border-radius:9px;border:none;padding:4px 8px;font-size:16px;}
+.error{color:#ff6b6b;margin:10px 0;}
+</style></head><body>
+<header class="header"><a class="brand" href="index.html"><h1>Simple Scents</h1></a></header>
+<main class="product-page">
+<h1>Checkout</h1>
+<form class="checkout-form" id="checkoutForm">
+<label>Email or Phone Number</label><input id="contact" type="text" required class="checkout-input"><br><br>
+<label>First Name</label><input type="text" required class="checkout-input"><br><br>
+<label>Last Name</label><input type="text" required class="checkout-input"><br><br>
+<label>Address</label><input id="address" type="text" required class="checkout-input"><br><br>
+<label>Street Name</label><input id="street" type="text" required class="checkout-input"><br><br>
+<label>City</label><input id="city" type="text" required class="checkout-input"><br><br>
+<label>State</label><input id="state" type="text" required class="checkout-input"><br><br>
+<label>ZIP Code</label><input id="zip" type="text" required class="checkout-input"><br><br>
+<div id="error" class="error"></div>
+<button type="submit">Pay with PayPal</button>
+</form></main>
+<script>
+document.getElementById('checkoutForm').addEventListener('submit',function(e){
+e.preventDefault();
+const contact=document.getElementById('contact').value.trim();
+const address=document.getElementById('address').value.trim();
+const street=document.getElementById('street').value.trim();
+const city=document.getElementById('city').value.trim();
+const state=document.getElementById('state').value.trim();
+const zip=document.getElementById('zip').value.trim();
+const err=document.getElementById('error');
+err.textContent='';
+const email=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phone=/^\d{10}$/;
+if(!(email.test(contact)||phone.test(contact.replace(/\D/g,'')))){err.textContent='Enter a valid email or 10-digit phone number.';return;}
+if(address.length<3||street.length<2||city.length<2){err.textContent='Enter a valid address.';return;}
+if(!/^[A-Za-z ]{2,}$/.test(state)){err.textContent='Enter a valid state.';return;}
+if(!/^\d{5}$/.test(zip)){err.textContent='Enter a valid 5-digit ZIP code.';return;}
+window.location.href='https://paypal.com';
+});
+</script></body></html>
