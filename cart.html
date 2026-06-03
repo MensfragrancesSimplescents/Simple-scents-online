@@ -212,11 +212,13 @@ function simpleScentsCorrectPrice(item) {
   const name = String(item.name || item.title || "").toLowerCase();
   if (name.includes("le male le parfum")) return 7.99;
   if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
-  return simpleScentsCorrectPrice(item);
+  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
 }
 function simpleScentsCorrectPriceText(item) {
   return "$" + simpleScentsCorrectPrice(item).toFixed(2);
 }
+
+
 
     const cartBox = document.getElementById("cart");
     let cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
@@ -234,11 +236,11 @@ function simpleScentsCorrectPriceText(item) {
 
         if (match) {
           match.qty = (match.qty || 1) + qty;
-          match.price = item.price || match.price;
+          match.price = simpleScentsCorrectPriceText(item);
           match.size = item.size || match.size;
           match.page = item.page || match.page;
         } else {
-          combined.push({ ...item, qty });
+          combined.push({ ...item, price: simpleScentsCorrectPriceText(item), qty });
         }
       });
 
@@ -256,7 +258,7 @@ function simpleScentsCorrectPriceText(item) {
 
       let total = 0;
       cartBox.innerHTML = cart.map((item, index) => {
-        const price = Number(item.price || 0);
+        const price = simpleScentsCorrectPrice(item);
         const qty = item.qty || 1;
         total += price * qty;
         return `

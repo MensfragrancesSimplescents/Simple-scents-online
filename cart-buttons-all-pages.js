@@ -3,11 +3,12 @@ function simpleScentsCorrectPrice(item) {
   const name = String(item.name || item.title || "").toLowerCase();
   if (name.includes("le male le parfum")) return 7.99;
   if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
-  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g,"")) || 0;
+  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
 }
 function simpleScentsCorrectPriceText(item) {
   return "$" + simpleScentsCorrectPrice(item).toFixed(2);
 }
+
 
 // Simple Scents cart buttons - FIXED fragrance names
 (function () {
@@ -46,7 +47,8 @@ function simpleScentsCorrectPriceText(item) {
     "$3.99 • 2ml sample";
 
   const priceMatch = priceText.match(/\$([0-9]+(?:\.[0-9]{2})?)/);
-  const price = priceMatch ? priceMatch[1] : "3.99";
+  let price = priceMatch ? priceMatch[1] : "3.99";
+  price = simpleScentsCorrectPrice({ name: title, price: price }).toFixed(2);
 
   let cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
 

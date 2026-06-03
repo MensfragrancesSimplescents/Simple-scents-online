@@ -3,7 +3,7 @@ function simpleScentsCorrectPrice(item) {
   const name = String(item.name || item.title || "").toLowerCase();
   if (name.includes("le male le parfum")) return 7.99;
   if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
-  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g,"")) || 0;
+  return simpleScentsCorrectPrice(item);
 }
 function simpleScentsCorrectPriceText(item) {
   return "$" + simpleScentsCorrectPrice(item).toFixed(2);

@@ -1,3 +1,13 @@
+function simpleScentsCorrectPrice(item) {
+  const name = String(item.name || item.title || "").toLowerCase();
+  if (name.includes("le male le parfum")) return 7.99;
+  if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
+  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
+}
+function simpleScentsCorrectPriceText(item) {
+  return "$" + simpleScentsCorrectPrice(item).toFixed(2);
+}
+
 /* Simple Scents - Buy Now direct checkout fix
    1) Upload this file next to index.html
    2) Add this line right before </body> in index.html:
@@ -19,7 +29,7 @@ function getCurrentProductPrice() {
 function openDirectCheckout() {
   const item = {
     name: getCurrentProductName(),
-    price: getCurrentProductPrice()
+    price: simpleScentsCorrectPrice({ name: getCurrentProductName(), price: getCurrentProductPrice() }).toFixed(2)
   };
 
   localStorage.setItem("buyNowItem", JSON.stringify(item));
