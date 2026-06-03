@@ -16,14 +16,16 @@ function getCurrentProductPrice() {
   const possiblePrice = document.querySelector(".price, .product-price, [data-price]");
   return possiblePrice ? possiblePrice.textContent.trim() : "";
 }
-
 function openDirectCheckout() {
-  const product = encodeURIComponent(getCurrentProductName());
-  const price = encodeURIComponent(getCurrentProductPrice());
-  const separator = DIRECT_CHECKOUT_LINK.includes("?") ? "&" : "?";
+  const item = {
+    name: getCurrentProductName(),
+    price: getCurrentProductPrice()
+  };
 
-  window.location.href = `${DIRECT_CHECKOUT_LINK}${separator}item=${product}&price=${price}`;
+  localStorage.setItem("buyNowItem", JSON.stringify(item));
+  window.location.href = "checkout.html";
 }
+
 
 function fixBuyNowButtons() {
   const buttons = Array.from(document.querySelectorAll("button, a"));
