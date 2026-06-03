@@ -160,6 +160,7 @@ updateTotals();
       const city = document.getElementById("city").value.trim();
       const state = document.getElementById("state").value.trim().toUpperCase();
       const zip = document.getElementById("zip").value.trim();
+      const VALID_STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"];
 
       const hasEmail = email.length > 0;
       const hasPhone = phone.length > 0;
@@ -184,8 +185,8 @@ updateTotals();
         alert("Enter a real address, street name, and city.");
         return;
       }
-      if (!/^[A-Z]{2}$/.test(state)) {
-        alert("Use a 2-letter state, like CA or NY.");
+      if (!/^[A-Z]{2}$/.test(state) || !VALID_STATES.includes(state)) {
+        alert("Enter a real U.S. state abbreviation (CA, TX, NY, etc.).");
         return;
       }
       if (!/^\d{5}$/.test(zip)) {
