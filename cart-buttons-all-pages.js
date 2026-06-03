@@ -75,10 +75,19 @@
     if (event) {
       event.preventDefault();
       event.stopPropagation();
+      if (event.stopImmediatePropagation) event.stopImmediatePropagation();
     }
 
-    // IMPORTANT: Buy Now goes straight to checkout page.
-    // It does NOT add this item to the cart and it does NOT open cart.html.
+    // Buy Now uses ONLY this one product, not the full cart.
+    const buyNowItem = {
+      name: title,
+      price: price,
+      size: "2ml sample",
+      page: window.location.pathname,
+      qty: 1
+    };
+
+    localStorage.setItem("simpleScentsBuyNow", JSON.stringify(buyNowItem));
     window.location.href = "checkout.html";
   }
 
