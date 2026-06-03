@@ -68,7 +68,7 @@
   <main class="product-page">
     <div class="checkout-top">
       <h1>Checkout</h1>
-      <div id="orderTotal">Total: $0.00</div>
+      <div><div id="subtotalDisplay">Subtotal: $0.00</div><div id="shippingDisplay">Shipping: $0.00</div><div id="orderTotal">Total: $0.00</div></div>
     </div>
 
     <form id="checkoutForm">
@@ -136,7 +136,17 @@ function simpleScentsCorrectPriceText(item) {
       });
     }
 
-    document.getElementById("orderTotal").textContent = "Total: $" + total.toFixed(2);
+    let shipping = 0;
+const stateField=document.getElementById("state");
+function updateTotals(){
+ const st=(stateField.value||"").trim().toUpperCase();
+ shipping = st==="CA" ? 4.99 : (st.length===2 ? 6.99 : 0);
+ document.getElementById("subtotalDisplay").textContent="Subtotal: $"+total.toFixed(2);
+ document.getElementById("shippingDisplay").textContent="Shipping: $"+shipping.toFixed(2);
+ document.getElementById("orderTotal").textContent="Total: $"+(total+shipping).toFixed(2);
+}
+stateField.addEventListener("input", updateTotals);
+updateTotals();
 
     document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
       e.preventDefault();
@@ -197,7 +207,7 @@ function simpleScentsCorrectPriceText(item) {
         city,
         state,
         zip,
-        orderTotal: "$" + total.toFixed(2),
+        orderTotal: "$" + (total+shipping).toFixed(2),
         orderItems
       };
 
