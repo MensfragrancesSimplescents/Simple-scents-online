@@ -85,7 +85,7 @@
       qty: 1
     };
 
-    // Buy Now should only checkout THIS fragrance, not the whole cart.
+    localStorage.setItem("checkoutMode", "buyNow");
     localStorage.setItem("buyNowItem", JSON.stringify(product));
     window.location.href = "checkout.html";
   }

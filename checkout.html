@@ -87,11 +87,19 @@
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
     const PAYPAL_URL = "https://www.paypal.com/";
 
+    const checkoutMode = localStorage.getItem("checkoutMode");
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
-    const cart = buyNowItem ? [buyNowItem] : JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+    const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+
+    let checkoutItems = [];
+    if (checkoutMode === "buyNow" && buyNowItem) {
+      checkoutItems = [buyNowItem];
+    } else {
+      checkoutItems = cart;
+    }
 
     let total = 0;
-    cart.forEach(item => {
+    checkoutItems.forEach(item => {
       total += (parseFloat(String(item.price).replace(/[^0-9.]/g, "")) || 0) * (item.qty || 1);
     });
     document.getElementById("orderTotal").textContent = "Total: $" + total.toFixed(2);
@@ -134,7 +142,7 @@
         return;
       }
 
-      const orderItems = cart.map(item => {
+      const orderItems = checkoutItems.map(item => {
         return `${item.name || "Item"} x${item.qty || 1} - $${item.price || "0"}`;
       }).join("\n");
 
@@ -149,6 +157,7 @@
         state,
         zip,
         orderTotal: "$" + total.toFixed(2),
+        orderType: checkoutMode === "buyNow" ? "Buy Now" : "Cart Checkout",
         orderItems
       };
 
@@ -163,6 +172,8 @@
         });
 
         if (response.ok) {
+          localStorage.removeItem("checkoutMode");
+          localStorage.removeItem("buyNowItem");
           window.location.href = PAYPAL_URL;
         } else {
           alert("Order info did not send. Check the form and try again.");

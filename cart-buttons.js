@@ -75,11 +75,9 @@
     if (event) {
       event.preventDefault();
       event.stopPropagation();
-      if (event.stopImmediatePropagation) event.stopImmediatePropagation();
     }
 
-    // Buy Now uses ONLY this one product, not the full cart.
-    const buyNowItem = {
+    const product = {
       name: title,
       price: price,
       size: "2ml sample",
@@ -87,7 +85,8 @@
       qty: 1
     };
 
-    localStorage.setItem("simpleScentsBuyNow", JSON.stringify(buyNowItem));
+    localStorage.setItem("checkoutMode", "buyNow");
+    localStorage.setItem("buyNowItem", JSON.stringify(product));
     window.location.href = "checkout.html";
   }
 

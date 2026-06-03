@@ -1,15 +1,28 @@
 document.addEventListener('click', function(e) {
   const btn = e.target.closest('button,a');
   if (!btn) return;
-  const t = (btn.textContent || '').toLowerCase().trim();
 
-  // Product page Buy Now is handled by cart-buttons-all-pages.js so it can save the item.
-  if (t.includes('buy now')) return;
+  const t = (btn.textContent || '').toLowerCase();
 
-  // Cart checkout should use the full cart, not an old Buy Now item.
-  if (t.includes('checkout')) {
+  if (t.includes('buy now')) {
+    const titleEl = document.querySelector('.product-title') || document.querySelector('main h1') || document.querySelector('body > h1');
+    const priceEl = document.querySelector('.price') || document.querySelector('[class*="price"]');
+    const name = titleEl ? titleEl.textContent.trim() : 'Fragrance Sample';
+    const priceText = priceEl ? priceEl.textContent.trim() : '$0.00';
+    const match = priceText.match(/\$([0-9]+(?:\.[0-9]{2})?)/);
+    const price = match ? match[1] : '0.00';
+
+    localStorage.setItem('checkoutMode', 'buyNow');
+    localStorage.setItem('buyNowItem', JSON.stringify({ name, price, size: '2ml sample', page: window.location.pathname, qty: 1 }));
     e.preventDefault();
-    localStorage.removeItem('simpleScentsBuyNow');
+    window.location.href = 'checkout.html';
+    return;
+  }
+
+  if (t.includes('checkout')) {
+    localStorage.setItem('checkoutMode', 'cart');
+    localStorage.removeItem('buyNowItem');
+    e.preventDefault();
     window.location.href = 'checkout.html';
   }
 });
