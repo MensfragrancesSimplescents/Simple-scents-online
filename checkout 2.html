@@ -1,40 +1,174 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"><style>
-.checkout-form label{font-size:22px;}
-.checkout-input{width:185px;max-width:48vw;height:32px;border-radius:9px;border:none;padding:4px 8px;font-size:16px;}
-.error{color:#ff6b6b;margin:10px 0;}
-</style></head><body>
-<header class="header"><a class="brand" href="index.html"><h1>Simple Scents</h1></a></header>
-<main class="product-page">
-<h1>Checkout</h1>
-<form class="checkout-form" id="checkoutForm">
-<label>Email or Phone Number</label><input id="contact" type="text" required class="checkout-input"><br><br>
-<label>First Name</label><input type="text" required class="checkout-input"><br><br>
-<label>Last Name</label><input type="text" required class="checkout-input"><br><br>
-<label>Address</label><input id="address" type="text" required class="checkout-input"><br><br>
-<label>Street Name</label><input id="street" type="text" required class="checkout-input"><br><br>
-<label>City</label><input id="city" type="text" required class="checkout-input"><br><br>
-<label>State</label><input id="state" type="text" required class="checkout-input"><br><br>
-<label>ZIP Code</label><input id="zip" type="text" required class="checkout-input"><br><br>
-<div id="error" class="error"></div>
-<button type="submit">Pay with PayPal</button>
-</form></main>
-<script>
-document.getElementById('checkoutForm').addEventListener('submit',function(e){
-e.preventDefault();
-const contact=document.getElementById('contact').value.trim();
-const address=document.getElementById('address').value.trim();
-const street=document.getElementById('street').value.trim();
-const city=document.getElementById('city').value.trim();
-const state=document.getElementById('state').value.trim();
-const zip=document.getElementById('zip').value.trim();
-const err=document.getElementById('error');
-err.textContent='';
-const email=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phone=/^\d{10}$/;
-if(!(email.test(contact)||phone.test(contact.replace(/\D/g,'')))){err.textContent='Enter a valid email or 10-digit phone number.';return;}
-if(address.length<3||street.length<2||city.length<2){err.textContent='Enter a valid address.';return;}
-if(!/^[A-Za-z ]{2,}$/.test(state)){err.textContent='Enter a valid state.';return;}
-if(!/^\d{5}$/.test(zip)){err.textContent='Enter a valid 5-digit ZIP code.';return;}
-window.location.href='https://paypal.com';
-});
-</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Simple Scents</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checkout-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    #orderTotal {
+      font-size: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .checkout-input {
+      width: 100%;
+      max-width: 360px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      margin-top: 6px;
+      font-size: 16px;
+    }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-size: 20px;
+    }
+    button {
+      margin-top: 22px;
+      padding: 12px 22px;
+      border-radius: 14px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="index.html"><h1>Simple Scents</h1></a>
+  </header>
+
+  <main class="product-page">
+    <div class="checkout-top">
+      <h1>Checkout</h1>
+      <div id="orderTotal">Total: $0.00</div>
+    </div>
+
+    <form id="checkoutForm">
+      <label>Email</label>
+      <input id="email" name="email" type="email" required class="checkout-input">
+
+      <label>Phone Number</label>
+      <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="10 digits" required class="checkout-input">
+
+      <label>First Name</label>
+      <input id="firstName" name="firstName" type="text" required class="checkout-input">
+
+      <label>Last Name</label>
+      <input id="lastName" name="lastName" type="text" required class="checkout-input">
+
+      <label>Address Number</label>
+      <input id="address" name="address" type="text" required class="checkout-input">
+
+      <label>Street Name</label>
+      <input id="street" name="street" type="text" required class="checkout-input">
+
+      <label>City</label>
+      <input id="city" name="city" type="text" required class="checkout-input">
+
+      <label>State (2 letters)</label>
+      <input id="state" name="state" type="text" maxlength="2" required class="checkout-input">
+
+      <label>ZIP Code</label>
+      <input id="zip" name="zip" type="text" inputmode="numeric" maxlength="5" required class="checkout-input">
+
+      <button type="submit">Pay with PayPal</button>
+    </form>
+  </main>
+
+  <script>
+    const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
+    const PAYPAL_URL = "https://www.paypal.com/";
+
+    const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+    let total = 0;
+    cart.forEach(item => {
+      total += (parseFloat(item.price) || 0) * (item.qty || 1);
+    });
+    document.getElementById("orderTotal").textContent = "Total: $" + total.toFixed(2);
+
+    document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.replace(/\D/g, "");
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const street = document.getElementById("street").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const state = document.getElementById("state").value.trim().toUpperCase();
+      const zip = document.getElementById("zip").value.trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Enter a real email address.");
+        return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Enter a real 10-digit phone number.");
+        return;
+      }
+      if (firstName.length < 2 || lastName.length < 2) {
+        alert("Enter your real first and last name.");
+        return;
+      }
+      if (address.length < 1 || street.length < 3 || city.length < 2) {
+        alert("Enter a real address, street name, and city.");
+        return;
+      }
+      if (!/^[A-Z]{2}$/.test(state)) {
+        alert("Use a 2-letter state, like CA or NY.");
+        return;
+      }
+      if (!/^\d{5}$/.test(zip)) {
+        alert("Enter a real 5-digit ZIP code.");
+        return;
+      }
+
+      const orderItems = cart.map(item => {
+        return `${item.name || "Item"} x${item.qty || 1} - $${item.price || "0"}`;
+      }).join("\n");
+
+      const orderData = {
+        email,
+        phone,
+        firstName,
+        lastName,
+        addressNumber: address,
+        streetName: street,
+        city,
+        state,
+        zip,
+        orderTotal: "$" + total.toFixed(2),
+        orderItems
+      };
+
+      try {
+        const response = await fetch(FORMSPREE_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(orderData)
+        });
+
+        if (response.ok) {
+          window.location.href = PAYPAL_URL;
+        } else {
+          alert("Order info did not send. Check the form and try again.");
+        }
+      } catch (error) {
+        alert("Something went wrong. Try again.");
+      }
+    });
+  </script>
+</body>
+</html>
