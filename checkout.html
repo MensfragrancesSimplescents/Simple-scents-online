@@ -6,6 +6,25 @@
   <title>Checkout - Simple Scents</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    .checkout-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 26px;
+      border-bottom: 1px solid #222;
+    }
+    .checkout-back {
+      color: white;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .checkout-brand {
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 800;
+    }
     .checkout-top {
       display: flex;
       justify-content: space-between;
@@ -41,8 +60,9 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <a class="brand" href="index.html"><h1>Simple Scents</h1></a>
+  <header class="checkout-header">
+    <a class="checkout-back" href="javascript:history.back()">← Back</a>
+    <a class="checkout-brand" href="index.html">Simple Scents</a>
   </header>
 
   <main class="product-page">
@@ -53,10 +73,10 @@
 
     <form id="checkoutForm">
       <label>Email</label>
-      <input id="email" name="email" type="email" required class="checkout-input">
+      <input id="email" name="email" type="email" class="checkout-input">
 
       <label>Phone Number</label>
-      <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="10 digits" required class="checkout-input">
+      <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="10 digits" class="checkout-input">
 
       <label>First Name</label>
       <input id="firstName" name="firstName" type="text" required class="checkout-input">
@@ -87,21 +107,20 @@
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
     const PAYPAL_URL = "https://www.paypal.com/";
 
-    const checkoutMode = localStorage.getItem("checkoutMode");
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
-    const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
-
     let checkoutItems = [];
-    if (checkoutMode === "buyNow" && buyNowItem) {
-      checkoutItems = [buyNowItem];
+    let total = 0;
+
+    if (buyNowItem) {
+      checkoutItems = [{...buyNowItem, qty: 1}];
+      total = parseFloat(String(buyNowItem.price || "0").replace(/[^0-9.]/g, "")) || 0;
     } else {
-      checkoutItems = cart;
+      checkoutItems = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+      checkoutItems.forEach(item => {
+        total += (parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0) * (item.qty || 1);
+      });
     }
 
-    let total = 0;
-    checkoutItems.forEach(item => {
-      total += (parseFloat(String(item.price).replace(/[^0-9.]/g, "")) || 0) * (item.qty || 1);
-    });
     document.getElementById("orderTotal").textContent = "Total: $" + total.toFixed(2);
 
     document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
@@ -117,12 +136,19 @@
       const state = document.getElementById("state").value.trim().toUpperCase();
       const zip = document.getElementById("zip").value.trim();
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Enter a real email address.");
+      const hasEmail = email.length > 0;
+      const hasPhone = phone.length > 0;
+
+      if (!hasEmail && !hasPhone) {
+        alert("Enter either an email or a phone number.");
         return;
       }
-      if (!/^\d{10}$/.test(phone)) {
-        alert("Enter a real 10-digit phone number.");
+      if (hasEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Enter a real email address, or leave email blank and use your phone number.");
+        return;
+      }
+      if (hasPhone && !/^\d{10}$/.test(phone)) {
+        alert("Enter a real 10-digit phone number, or leave phone blank and use your email.");
         return;
       }
       if (firstName.length < 2 || lastName.length < 2) {
@@ -147,8 +173,8 @@
       }).join("\n");
 
       const orderData = {
-        email,
-        phone,
+        email: email || "Not provided",
+        phone: phone || "Not provided",
         firstName,
         lastName,
         addressNumber: address,
@@ -157,7 +183,6 @@
         state,
         zip,
         orderTotal: "$" + total.toFixed(2),
-        orderType: checkoutMode === "buyNow" ? "Buy Now" : "Cart Checkout",
         orderItems
       };
 
@@ -172,7 +197,6 @@
         });
 
         if (response.ok) {
-          localStorage.removeItem("checkoutMode");
           localStorage.removeItem("buyNowItem");
           window.location.href = PAYPAL_URL;
         } else {
