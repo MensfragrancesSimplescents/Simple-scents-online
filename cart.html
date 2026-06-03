@@ -301,20 +301,90 @@ function removeItem(index) {
     }
 
     function checkout() {
-      if (!cart || cart.length === 0) {
-        const popup=document.createElement("div");
-        popup.innerHTML=`<div style="position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;">
-        <div style="background:#111;color:#fff;padding:20px;border-radius:16px;width:300px;">
-        <p style="margin-top:0">You do not have anything in your cart.</p>
-        <div style="text-align:right"><button onclick="this.closest('div').parentElement.parentElement.remove()" style="padding:8px 14px;border-radius:8px;">Close</button></div>
-        </div></div>`;
-        document.body.appendChild(popup);
-        return;
-      }
-      window.location.href = "checkout.html";
+      window.location.href = "https://www.paypal.com/";
     }
 
     renderCart();
   </script>
-<script src="checkout-redirect.js"></script></body>
+<script src="checkout-redirect.js"></script>
+<script>
+(function () {
+  function getCartItems() {
+    try {
+      return JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function showEmptyCartPopup() {
+    const old = document.getElementById("emptyCartPopup");
+    if (old) old.remove();
+
+    document.body.insertAdjacentHTML("beforeend", `
+      <div id="emptyCartPopup" style="
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.65);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:999999;
+        padding:20px;">
+        <div style="
+          background:#111;
+          color:white;
+          border:1px solid #333;
+          border-radius:18px;
+          padding:22px;
+          width:min(340px,90vw);
+          box-shadow:0 10px 30px rgba(0,0,0,.45);
+          font-family:Arial,sans-serif;">
+          <div style="font-size:20px;line-height:1.35;margin-bottom:22px;">
+            You do not have anything in your cart.
+          </div>
+          <div style="text-align:right;">
+            <button type="button" onclick="document.getElementById('emptyCartPopup').remove()" style="
+              background:white;
+              color:black;
+              border:none;
+              border-radius:999px;
+              padding:10px 18px;
+              font-size:16px;
+              font-weight:700;">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  document.addEventListener("click", function (e) {
+    const target = e.target.closest("a, button");
+    if (!target) return;
+
+    const text = (target.textContent || "").trim().toLowerCase();
+    const href = (target.getAttribute("href") || "").toLowerCase();
+
+    const isCheckout =
+      text === "checkout" ||
+      text.includes("checkout") ||
+      href.includes("checkout.html");
+
+    if (!isCheckout) return;
+
+    const cart = getCartItems();
+    if (!cart || cart.length === 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      showEmptyCartPopup();
+      return false;
+    }
+  }, true);
+})();
+</script>
+
+</body>
 </html>
