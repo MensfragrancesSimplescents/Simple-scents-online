@@ -1,3 +1,14 @@
+
+function simpleScentsCorrectPrice(item) {
+  const name = String(item.name || item.title || "").toLowerCase();
+  if (name.includes("le male le parfum")) return 7.49;
+  if (name.includes("le male") && !name.includes("le parfum")) return 5.99;
+  return simpleScentsCorrectPrice(item);
+}
+function simpleScentsCorrectPriceText(item) {
+  return "$" + simpleScentsCorrectPrice(item).toFixed(2);
+}
+
 // Simple Scents sticky bottom buttons
 (function () {
   const title =

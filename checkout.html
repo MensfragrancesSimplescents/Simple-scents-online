@@ -106,6 +106,17 @@
   </main>
 
   <script>
+
+function simpleScentsCorrectPrice(item) {
+  const name = String(item.name || item.title || "").toLowerCase();
+  if (name.includes("le male le parfum")) return 7.49;
+  if (name.includes("le male") && !name.includes("le parfum")) return 5.99;
+  return simpleScentsCorrectPrice(item);
+}
+function simpleScentsCorrectPriceText(item) {
+  return "$" + simpleScentsCorrectPrice(item).toFixed(2);
+}
+
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
     const PAYPAL_URL = "https://www.paypal.com/";
 
@@ -115,11 +126,11 @@
 
     if (buyNowItem) {
       checkoutItems = [{...buyNowItem, qty: 1}];
-      total = parseFloat(String(buyNowItem.price || "0").replace(/[^0-9.]/g, "")) || 0;
+      total = simpleScentsCorrectPrice(buyNowItem);
     } else {
       checkoutItems = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
       checkoutItems.forEach(item => {
-        total += (parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0) * (item.qty || 1);
+        total += (simpleScentsCorrectPrice(item)) * (item.qty || 1);
       });
     }
 
@@ -171,7 +182,7 @@
       }
 
       const orderItems = checkoutItems.map(item => {
-        return `${item.name || "Item"} x${item.qty || 1} - $${item.price || "0"}`;
+        return `${item.name || "Item"} x${item.qty || 1} - ${simpleScentsCorrectPriceText(item)}`;
       }).join("\n");
 
       const orderData = {
