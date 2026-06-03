@@ -1,19 +1,33 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"><style>
-.checkout-form label{font-size:22px;}
-.checkout-input{width:185px;max-width:48vw;height:32px;border-radius:9px;border:none;padding:4px 8px;font-size:16px;}
-@media(max-width:430px){.checkout-input{width:170px;max-width:46vw;height:30px;}.checkout-form label{font-size:21px;}}
-</style></head><body>
-<header class="header"><a class="brand" href="index.html"><h1>Simple Scents</h1></a></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Checkout | Simple Scents</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="header"><a class="brand" href="index.html"><h1>Simple Scents</h1></a><div id="orderTotal" style="float:right;padding:10px;font-size:20px;">Total: $0.00</div></header>
 <main class="product-page">
 <h1>Checkout</h1>
-<form class="checkout-form">
-<label>Email or Phone Number</label><input type="text" required class="checkout-input"><br><br>
-<label>First Name</label><input type="text" required class="checkout-input"><br><br>
-<label>Last Name</label><input type="text" required class="checkout-input"><br><br>
-<label>Address</label><input type="text" required class="checkout-input"><br><br>
-<label>Street Name</label><input type="text" required class="checkout-input"><br><br>
-<label>City</label><input type="text" required class="checkout-input"><br><br>
-<label>State</label><input type="text" required class="checkout-input"><br><br>
-<label>ZIP Code</label><input type="text" required class="checkout-input"><br><br>
+<form class="checkout-form" id="checkoutForm">
+<label>Email</label><input id="email" type="email" required class="checkout-input"><br><br>
+<label>Phone Number</label><input id="phone" type="tel" required class="checkout-input"><br><br>
+<label>First Name</label><input required class="checkout-input"><br><br>
+<label>Last Name</label><input required class="checkout-input"><br><br>
+<label>Address Number</label><input id="address" required class="checkout-input"><br><br>
+<label>Street Name</label><input id="street" required class="checkout-input"><br><br>
+<label>City</label><input id="city" required class="checkout-input"><br><br>
+<label>State (2 letters)</label><input id="state" required class="checkout-input"><br><br>
+<label>ZIP Code</label><input id="zip" required class="checkout-input"><br><br>
 <button type="submit">Pay with PayPal</button>
-</form></main><script src="checkout-redirect.js"></script></body></html>
+</form></main>
+<script>
+const cart=JSON.parse(localStorage.getItem('simpleScentsCart')||'[]');
+let total=0; cart.forEach(i=>total+=(parseFloat(i.price)||0)*(i.qty||1));
+document.getElementById('orderTotal').textContent='Total: $'+total.toFixed(2);
+document.getElementById('checkoutForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const email=email.value.trim();
+ const phone=document.getElementById('phone').value.replace(/\D/g,'');
+ const zip=document.getElementById('zip').value.trim();
+ const state=document.getElementById('state').value.trim();
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Enter a valid email');
+ if(phone.length!==10) return alert('Enter a real 10-digit phone number');
+ if(!/^\d{5}$/.test(zip)) return alert('Enter a valid ZIP code');
+ if(!/^[A-Za-z]{2}$/.test(state)) return alert('Use 2-letter state code');
+ window.location.href='https://www.paypal.com/';
+});
+</script></body></html>
