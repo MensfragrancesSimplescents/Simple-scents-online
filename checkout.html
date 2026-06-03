@@ -3,15 +3,32 @@
 <main class="product-page">
 <h1>Checkout</h1>
 <form action="https://formspree.io/f/mdavngdy" method="POST">
-<label>Email</label><input id="email" type="email" required class="checkout-input"><br><br>
-<label>Phone Number</label><input id="phone" type="tel" required class="checkout-input"><br><br>
-<label>First Name</label><input required class="checkout-input"><br><br>
-<label>Last Name</label><input required class="checkout-input"><br><br>
-<label>Address Number</label><input id="address" required class="checkout-input"><br><br>
-<label>Street Name</label><input id="street" required class="checkout-input"><br><br>
-<label>City</label><input id="city" required class="checkout-input"><br><br>
-<label>State (2 letters)</label><input id="state" required class="checkout-input"><br><br>
-<label>ZIP Code</label><input id="zip" required class="checkout-input"><br><br>
+ <label>Email</label>
+<input id="email" name="email" type="email" required class="checkout-input"><br><br>
+
+<label>Phone Number</label>
+<input id="phone" name="phone" type="tel" required class="checkout-input"><br><br>
+
+<label>First Name</label>
+<input id="firstName" name="firstName" type="text" required class="checkout-input"><br><br>
+
+<label>Last Name</label>
+<input id="lastName" name="lastName" type="text" required class="checkout-input"><br><br>
+
+<label>Address Number</label>
+<input id="address" name="address" type="text" required class="checkout-input"><br><br>
+
+<label>Street Name</label>
+<input id="street" name="street" type="text" required class="checkout-input"><br><br>
+
+<label>City</label>
+<input id="city" name="city" type="text" required class="checkout-input"><br><br>
+
+<label>State (2 letters)</label>
+<input id="state" name="state" type="text" required class="checkout-input"><br><br>
+
+<label>ZIP Code</label>
+<input id="zip" name="zip" type="text" required class="checkout-input"><br><br>
 <button type="submit">Pay with PayPal</button>
 </form></main>
 <script>
@@ -19,7 +36,7 @@ const cart=JSON.parse(localStorage.getItem('simpleScentsCart')||'[]');
 let total=0; cart.forEach(i=>total+=(parseFloat(i.price)||0)*(i.qty||1));
 document.getElementById('orderTotal').textContent='Total: $'+total.toFixed(2);
 document.getElementById('checkoutForm').addEventListener('submit',e=>{
- 
+
  const email=email.value.trim();
  const phone=document.getElementById('phone').value.replace(/\D/g,'');
  const zip=document.getElementById('zip').value.trim();
