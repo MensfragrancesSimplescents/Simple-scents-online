@@ -88,7 +88,18 @@
     const PAYPAL_URL = "https://www.paypal.com/";
 
     const buyNowItem = JSON.parse(localStorage.getItem("simpleScentsBuyNow") || "null");
-    const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+    const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
+
+let total = 0;
+
+if (buyNowItem) {
+  total = parseFloat(String(buyNowItem.price).replace(/[^0-9.]/g, "")) || 0;
+} else {
+  const cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
+  cart.forEach(item => {
+    total += (parseFloat(item.price) || 0) * (item.qty || 1);
+  });
+}
 
     // If the customer clicked Buy Now, checkout ONLY that item.
     // If they came from the cart, checkout the whole cart.
