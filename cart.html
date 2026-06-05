@@ -209,9 +209,6 @@
   <script>
 
 function simpleScentsCorrectPrice(item) {
-  const name = String(item.name || item.title || "").toLowerCase();
-  if (name.includes("le male le parfum")) return 7.99;
-  if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
   return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
 }
 function simpleScentsCorrectPriceText(item) {
@@ -224,7 +221,8 @@ function simpleScentsCorrectPriceText(item) {
     let cart = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
 
     function sameProduct(a, b) {
-      return String(a.name || "").trim().toLowerCase() === String(b.name || "").trim().toLowerCase();
+      return String(a.name || "").trim().toLowerCase() === String(b.name || "").trim().toLowerCase()
+        && String(a.size || "").trim().toLowerCase() === String(b.size || "").trim().toLowerCase();
     }
 
     function combineMatchingItems() {
@@ -236,11 +234,11 @@ function simpleScentsCorrectPriceText(item) {
 
         if (match) {
           match.qty = (match.qty || 1) + qty;
-          match.price = simpleScentsCorrectPriceText(item);
+          match.price = item.price || match.price;
           match.size = item.size || match.size;
           match.page = item.page || match.page;
         } else {
-          combined.push({ ...item, price: simpleScentsCorrectPriceText(item), qty });
+          combined.push({ ...item, price: String(simpleScentsCorrectPrice(item).toFixed(2)), qty });
         }
       });
 

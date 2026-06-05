@@ -129,9 +129,6 @@
   <script>
 
 function simpleScentsCorrectPrice(item) {
-  const name = String(item.name || item.title || "").toLowerCase();
-  if (name.includes("le male le parfum")) return 7.99;
-  if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
   return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
 }
 function simpleScentsCorrectPriceText(item) {
@@ -222,7 +219,7 @@ updateTotals();
       }
 
       const orderItems = checkoutItems.map(item => {
-        return `${item.name || "Item"} x${item.qty || 1} - $${simpleScentsCorrectPriceText(item)}`;
+        return `${item.name || "Item"} (${item.size || "sample"}) x${item.qty || 1} - ${simpleScentsCorrectPriceText(item)}`;
       }).join("\n");
 
       const orderData = {
