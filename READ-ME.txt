@@ -1,7 +1,18 @@
-Upload BOTH image files to your GitHub repository and replace the old broken Cremo images.
+Upload these 2 files to your website:
 
-These names are already correct:
-- cremo-spice-black-vanilla-handheld.jpg
-- cremo-spice-black-vanilla-close.jpg
+1. size-selector.css
+2. size-selector.js
 
-Then wait 1 minute and refresh your website.
+Then add these 2 lines to your HTML file:
+
+Put this before </head>:
+<link rel="stylesheet" href="size-selector.css">
+
+Put this before </body>:
+<script src="size-selector.js"></script>
+
+What it does:
+- Adds 1 mL and 2 mL buttons under the swipe left/right photo text.
+- Uses 2 mL as the default.
+- Updates the shown price when someone taps 1 mL or 2 mL.
+- Saves the chosen size/price so your cart code can use it.
