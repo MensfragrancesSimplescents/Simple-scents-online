@@ -57,6 +57,21 @@
       font-size: 18px;
       cursor: pointer;
     }
+    .checkout-summary {
+      margin-top: 22px;
+      margin-bottom: 0;
+      padding: 14px 18px;
+      border: 1px solid #333;
+      border-radius: 12px;
+      max-width: 360px;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+    .checkout-summary span {
+      float: right;
+      margin-left: 12px;
+    }
+
   </style>
 </head>
 <body>
@@ -68,7 +83,6 @@
   <main class="product-page">
     <div class="checkout-top">
       <h1>Checkout</h1>
-      <div><div id="subtotalDisplay">Subtotal: $0.00</div><div id="shippingDisplay">Shipping: $0.00</div><div id="taxDisplay">Estimated Tax (8.25%): $0.00</div><div id="orderTotal">Total: $0.00</div></div>
     </div>
 
     <form id="checkoutForm">
@@ -100,6 +114,13 @@
 
       <label>ZIP Code</label>
       <input id="zip" name="zip" type="text" inputmode="numeric" maxlength="5" required class="checkout-input">
+
+      <div id="checkoutSummary" class="checkout-summary">
+        <div>Subtotal: <span id="subtotalDisplay">$0.00</span></div>
+        <div>Shipping: <span id="shippingDisplay">$0.00</span></div>
+        <div>Estimated Tax (8.25%): <span id="taxDisplay">$0.00</span></div>
+        <div id="orderTotal">Total: $0.00</div>
+      </div>
 
       <button type="submit">Pay with PayPal</button>
     </form>
@@ -146,8 +167,8 @@ function updateTotals(){
  shipping = st==="CA" ? 4.99 : (st.length===2 ? 6.99 : 0);
  estimatedTax = total * TAX_RATE;
  finalTotal = total + shipping + estimatedTax;
- document.getElementById("subtotalDisplay").textContent="Subtotal: $"+total.toFixed(2);
- document.getElementById("shippingDisplay").textContent="Shipping: $"+shipping.toFixed(2);
+ document.getElementById("subtotalDisplay").textContent="$"+total.toFixed(2);
+ document.getElementById("shippingDisplay").textContent="$"+shipping.toFixed(2);
  document.getElementById("taxDisplay").textContent="Estimated Tax (8.25%): $"+estimatedTax.toFixed(2);
  document.getElementById("orderTotal").textContent="Total: $"+finalTotal.toFixed(2);
 }
