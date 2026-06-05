@@ -169,7 +169,7 @@ function updateTotals(){
  finalTotal = total + shipping + estimatedTax;
  document.getElementById("subtotalDisplay").textContent="$"+total.toFixed(2);
  document.getElementById("shippingDisplay").textContent="$"+shipping.toFixed(2);
- document.getElementById("taxDisplay").textContent="Estimated Tax (8.25%): $"+estimatedTax.toFixed(2);
+ document.getElementById("taxDisplay").textContent="$"+estimatedTax.toFixed(2);
  document.getElementById("orderTotal").textContent="Total: $"+finalTotal.toFixed(2);
 }
 stateField.addEventListener("input", updateTotals);
