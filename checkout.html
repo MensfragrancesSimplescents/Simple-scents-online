@@ -128,10 +128,48 @@
 
   <script>
 
+
+function simpleScentsCleanName(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9& ]/g, " ").replace(/\s+/g, " ").trim();
+}
+const SIMPLE_SCENTS_SIZE_PRICES = {
+  "acqua di gio profondo": { one: 3.99, two: 6.49 },
+  "afnan 9pm": { one: 2.99, two: 4.99 },
+  "9pm": { one: 2.99, two: 4.99 },
+  "armaf ventana": { one: 2.49, two: 3.99 },
+  "aromatic citrus": { one: 1.99, two: 3.99 },
+  "cremo spice black vanilla": { one: 2.49, two: 3.99 },
+  "cremo spice & black vanilla": { one: 2.49, two: 3.99 },
+  "guess seductive homme": { one: 2.49, two: 3.99 },
+  "invictus": { one: 3.49, two: 5.99 },
+  "jpg le beau": { one: 4.49, two: 7.99 },
+  "jpg le male le parfum": { one: 4.49, two: 7.99 },
+  "jpg le male": { one: 3.49, two: 5.99 },
+  "mancera instant crush": { one: 4.99, two: 7.99 },
+  "nautica voyage": { one: 2.49, two: 3.99 },
+  "1 million": { one: 3.49, two: 5.99 },
+  "one million": { one: 3.49, two: 5.99 },
+  "pacific rock moss": { one: 4.99, two: 7.99 },
+  "prada luna rossa ocean": { one: 3.99, two: 6.99 },
+  "prada ocean": { one: 3.99, two: 6.99 },
+  "ysl myslf": { one: 4.99, two: 7.99 },
+  "ysl myself": { one: 4.99, two: 7.99 },
+  "versace eros flame": { one: 4.49, two: 7.49 }
+};
+function simpleScentsPricePair(name) {
+  const clean = simpleScentsCleanName(name);
+  let keys = Object.keys(SIMPLE_SCENTS_SIZE_PRICES).sort((a,b)=>b.length-a.length);
+  let key = keys.find(k => clean.includes(k) || k.includes(clean));
+  return key ? SIMPLE_SCENTS_SIZE_PRICES[key] : { one: 3.49, two: 5.99 };
+}
+function simpleScentsSizeKey(size) {
+  return String(size || "2 mL").toLowerCase().includes("1") ? "one" : "two";
+}
 function simpleScentsCorrectPrice(item) {
-  const name = String(item.name || item.title || "").toLowerCase();
-  if (name.includes("le male le parfum")) return 7.99;
-  if (name.includes("le male") && !name.includes("le parfum")) return 6.99;
+  const pair = simpleScentsPricePair(item.name || item.title || document.title || "");
+  const key = simpleScentsSizeKey(item.size || item.sampleSize || "2 mL");
+  const mapped = pair[key];
+  if (mapped) return mapped;
   return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
 }
 function simpleScentsCorrectPriceText(item) {
@@ -222,7 +260,7 @@ updateTotals();
       }
 
       const orderItems = checkoutItems.map(item => {
-        return `${item.name || "Item"} x${item.qty || 1} - $${simpleScentsCorrectPriceText(item)}`;
+        return `${item.name || "Item"} (${item.size || "2 mL"}) x${item.qty || 1} - ${simpleScentsCorrectPriceText(item)}`;
       }).join("\n");
 
       const orderData = {
