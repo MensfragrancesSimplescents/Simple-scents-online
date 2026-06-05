@@ -1,18 +1,9 @@
-Upload these 2 files to your website:
+HOW TO USE:
+1. Upload size-selector-fixed.js to your GitHub website files.
+2. Open every product/cologne HTML page.
+3. Right before </body>, paste this line:
 
-1. size-selector.css
-2. size-selector.js
+<script src="size-selector-fixed.js"></script>
 
-Then add these 2 lines to your HTML file:
-
-Put this before </head>:
-<link rel="stylesheet" href="size-selector.css">
-
-Put this before </body>:
-<script src="size-selector.js"></script>
-
-What it does:
-- Adds 1 mL and 2 mL buttons under the swipe left/right photo text.
-- Uses 2 mL as the default.
-- Updates the shown price when someone taps 1 mL or 2 mL.
-- Saves the chosen size/price so your cart code can use it.
+This fixed version makes a big 1 mL / 2 mL choice box under the swipe photos text.
+Default is 2 mL. Tapping 1 mL changes the visible price to the 1 mL price.
