@@ -68,7 +68,7 @@
   <main class="product-page">
     <div class="checkout-top">
       <h1>Checkout</h1>
-      <div><div id="subtotalDisplay">Subtotal: $0.00</div><div id="shippingDisplay">Shipping: $0.00</div><div id="orderTotal">Total: $0.00</div></div>
+      <div><div id="subtotalDisplay">Subtotal: $0.00</div><div id="shippingDisplay">Shipping: $0.00</div><div id="taxDisplay">Estimated Tax (8.25%): $0.00</div><div id="orderTotal">Total: $0.00</div></div>
     </div>
 
     <form id="checkoutForm">
@@ -136,14 +136,20 @@ function simpleScentsCorrectPriceText(item) {
       });
     }
 
+    const TAX_RATE = 0.0825;
     let shipping = 0;
+    let estimatedTax = 0;
+    let finalTotal = 0;
 const stateField=document.getElementById("state");
 function updateTotals(){
  const st=(stateField.value||"").trim().toUpperCase();
  shipping = st==="CA" ? 4.99 : (st.length===2 ? 6.99 : 0);
+ estimatedTax = total * TAX_RATE;
+ finalTotal = total + shipping + estimatedTax;
  document.getElementById("subtotalDisplay").textContent="Subtotal: $"+total.toFixed(2);
  document.getElementById("shippingDisplay").textContent="Shipping: $"+shipping.toFixed(2);
- document.getElementById("orderTotal").textContent="Total: $"+(total+shipping).toFixed(2);
+ document.getElementById("taxDisplay").textContent="Estimated Tax (8.25%): $"+estimatedTax.toFixed(2);
+ document.getElementById("orderTotal").textContent="Total: $"+finalTotal.toFixed(2);
 }
 stateField.addEventListener("input", updateTotals);
 updateTotals();
@@ -208,7 +214,10 @@ updateTotals();
         city,
         state,
         zip,
-        orderTotal: "$" + (total+shipping).toFixed(2),
+        subtotal: "$" + total.toFixed(2),
+        shipping: "$" + shipping.toFixed(2),
+        estimatedTax: "$" + estimatedTax.toFixed(2),
+        orderTotal: "$" + finalTotal.toFixed(2),
         orderItems
       };
 
