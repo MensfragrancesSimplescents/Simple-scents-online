@@ -1,0 +1,16 @@
+Upload these files to your GitHub website:
+
+1. versace-eros-flame.html
+2. add-eros-flame-card.js
+
+Also upload your 3 photos with these exact names:
+
+images/versace-eros-flame-handheld.jpg   = handheld photo first
+images/versace-eros-flame.jpg            = normal bottle photo second
+images/versace-eros-flame-2ml.jpg        = 2ml bottle photo third
+
+Then open index.html and paste this right before </body>:
+
+<script src="add-eros-flame-card.js"></script>
+
+Commit changes.
