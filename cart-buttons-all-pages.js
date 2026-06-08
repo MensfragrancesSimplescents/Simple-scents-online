@@ -17,6 +17,7 @@
     { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 4.99, two: 6.99 },
     { keys: ['prada luna rossa ocean', 'prada ocean'], one: 3.99, two: 5.99 },
     { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 1.99, two: 3.99 },
+    { keys: ['versace eros flame', 'eros flame'], one: 4.49, two: 6.49 },
     { keys: ['invictus edt', 'invictus'], one: 3.49, two: 5.49 },
     { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 3.49, two: 4.99 },
     { keys: ['afnan 9pm', '9pm'], one: 2.99, two: 4.99 },
