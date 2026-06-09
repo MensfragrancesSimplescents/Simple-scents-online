@@ -299,7 +299,9 @@ function removeItem(index) {
     }
 
     function checkout() {
-      window.location.href = "https://www.paypal.com/";
+      localStorage.setItem("checkoutMode", "cart");
+      localStorage.removeItem("buyNowItem");
+      window.location.href = "checkout.html";
     }
 
     renderCart();

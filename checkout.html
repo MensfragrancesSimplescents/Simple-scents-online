@@ -71,6 +71,17 @@
       float: right;
       margin-left: 12px;
     }
+    #paypal-button-container {
+      margin-top: 18px;
+      max-width: 360px;
+    }
+    #paypalStatus {
+      margin-top: 10px;
+      max-width: 360px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: #f5f5f5;
+    }
 
   </style>
 </head>
@@ -122,10 +133,13 @@
         <div id="orderTotal">Total: $0.00</div>
       </div>
 
-      <button type="submit">Pay with PayPal</button>
+      <button type="button" id="preparePayPalButton">Pay with PayPal</button>
+      <div id="paypalStatus">Press Pay with PayPal after filling out the form. PayPal will charge the exact total shown above.</div>
+      <div id="paypal-button-container"></div>
     </form>
   </main>
 
+  <script src="https://www.paypal.com/sdk/js?client-id=ARsX-6VTijURUORZFdX7W9xT3k3R_zgG_ANDJOeuedWRVN3n1jYyF8Y4pofQzan5TYagx7F_su4HdSP2&currency=USD"></script>
   <script>
 
 function simpleScentsCorrectPrice(item) {
@@ -138,7 +152,8 @@ function simpleScentsCorrectPriceText(item) {
 
 
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
-    const PAYPAL_URL = "https://www.paypal.com/";
+    let paypalButtonsRendered = false;
+    let latestOrderData = null;
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
@@ -172,8 +187,13 @@ function updateTotals(){
 stateField.addEventListener("input", updateTotals);
 updateTotals();
 
-    document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+    function getValidatedOrderData() {
+      updateTotals();
+
+      if (!checkoutItems.length || total <= 0) {
+        alert("Your cart is empty. Add a fragrance before checkout.");
+        return null;
+      }
 
       const email = document.getElementById("email").value.trim();
       const phone = document.getElementById("phone").value.replace(/\D/g, "");
@@ -191,31 +211,31 @@ updateTotals();
 
       if (!hasEmail && !hasPhone) {
         alert("Enter either an email or a phone number.");
-        return;
+        return null;
       }
       if (hasEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert("Enter a real email address, or leave email blank and use your phone number.");
-        return;
+        return null;
       }
       if (hasPhone && !/^\d{10}$/.test(phone)) {
         alert("Enter a real 10-digit phone number, or leave phone blank and use your email.");
-        return;
+        return null;
       }
       if (firstName.length < 2 || lastName.length < 2) {
         alert("Enter your real first and last name.");
-        return;
+        return null;
       }
       if (address.length < 1 || street.length < 3 || city.length < 2) {
         alert("Enter a real address, street name, and city.");
-        return;
+        return null;
       }
       if (!/^[A-Z]{2}$/.test(state) || !VALID_STATES.includes(state)) {
         alert("Enter a real U.S. state abbreviation (CA, TX, NY, etc.).");
-        return;
+        return null;
       }
       if (!/^\d{5}$/.test(zip)) {
         alert("Enter a real 5-digit ZIP code.");
-        return;
+        return null;
       }
 
       const orderItems = checkoutItems.map(item => {
@@ -244,26 +264,125 @@ updateTotals();
         orderData._replyto = email;
       }
 
-      try {
-        const response = await fetch(FORMSPREE_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(orderData)
-        });
+      return orderData;
+    }
 
-        if (response.ok) {
-          localStorage.removeItem("buyNowItem");
-          window.location.href = PAYPAL_URL;
-        } else {
-          const errorText = await response.text();
-          alert("Order info did not send. Try using email, or check Formspree.");
-        }
-      } catch (error) {
-        alert("Something went wrong. Try again.");
+    async function sendOrderToFormspree(orderData) {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Formspree did not accept the order info.");
       }
+    }
+
+    function lockCheckoutFields(locked) {
+      document.querySelectorAll("#checkoutForm input").forEach(input => {
+        input.readOnly = locked;
+      });
+      document.getElementById("preparePayPalButton").disabled = locked;
+    }
+
+    function renderPayPalButtons() {
+      if (paypalButtonsRendered) {
+        document.getElementById("paypalStatus").textContent = "Use the PayPal button below. It will charge the exact total shown above.";
+        return;
+      }
+
+      if (!window.paypal) {
+        alert("PayPal did not load. Check your internet connection and try again.");
+        return;
+      }
+
+      paypalButtonsRendered = true;
+      document.getElementById("paypalStatus").textContent = "Use the PayPal button below. It will charge the exact total shown above.";
+
+      paypal.Buttons({
+        style: {
+          layout: "vertical",
+          color: "gold",
+          shape: "rect",
+          label: "paypal"
+        },
+        onClick: function(data, actions) {
+          latestOrderData = getValidatedOrderData();
+          if (!latestOrderData) {
+            return actions.reject();
+          }
+          lockCheckoutFields(true);
+          return actions.resolve();
+        },
+        createOrder: function(data, actions) {
+          updateTotals();
+          latestOrderData = getValidatedOrderData();
+          if (!latestOrderData) {
+            throw new Error("Checkout form is missing information.");
+          }
+
+          const exactTotal = finalTotal.toFixed(2);
+          return actions.order.create({
+            purchase_units: [{
+              description: "Simple Scents Order",
+              amount: {
+                currency_code: "USD",
+                value: exactTotal,
+                breakdown: {
+                  item_total: { currency_code: "USD", value: total.toFixed(2) },
+                  shipping: { currency_code: "USD", value: shipping.toFixed(2) },
+                  tax_total: { currency_code: "USD", value: estimatedTax.toFixed(2) }
+                }
+              }
+            }]
+          });
+        },
+        onCancel: function() {
+          lockCheckoutFields(false);
+          document.getElementById("paypalStatus").textContent = "Payment was cancelled. You can check your info and try again.";
+        },
+        onApprove: async function(data, actions) {
+          try {
+            const details = await actions.order.capture();
+            const paidData = {
+              ...latestOrderData,
+              paypalOrderID: data.orderID,
+              paypalPayerID: data.payerID || "",
+              paypalStatus: details.status || "COMPLETED",
+              paidAt: new Date().toISOString()
+            };
+
+            await sendOrderToFormspree(paidData);
+            localStorage.removeItem("buyNowItem");
+            localStorage.removeItem("simpleScentsCart");
+            localStorage.removeItem("checkoutMode");
+            alert("Payment complete. Thank you for your Simple Scents order!");
+            window.location.href = "index.html";
+          } catch (error) {
+            alert("Payment may have gone through, but the order info did not send correctly. Screenshot this page and contact Simple Scents.");
+            lockCheckoutFields(false);
+          }
+        },
+        onError: function(err) {
+          console.error(err);
+          alert("PayPal had an error. Please try again.");
+          lockCheckoutFields(false);
+        }
+      }).render("#paypal-button-container");
+    }
+
+    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+    });
+
+    document.getElementById("preparePayPalButton").addEventListener("click", function() {
+      latestOrderData = getValidatedOrderData();
+      if (!latestOrderData) return;
+      renderPayPalButtons();
     });
   </script>
 </body>
