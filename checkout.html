@@ -71,11 +71,7 @@
       float: right;
       margin-left: 12px;
     }
-    #paypal-button-container {
-      margin-top: 18px;
-      max-width: 360px;
-    }
-    #paypalStatus {
+    #checkoutStatus {
       margin-top: 10px;
       max-width: 360px;
       font-size: 16px;
@@ -133,13 +129,11 @@
         <div id="orderTotal">Total: $0.00</div>
       </div>
 
-      <button type="button" id="preparePayPalButton">Pay with PayPal</button>
-      <div id="paypalStatus">Press Pay with PayPal after filling out the form. PayPal will charge the exact total shown above.</div>
-      <div id="paypal-button-container"></div>
+      <button type="submit" id="payNowButton">Pay Now</button>
+      <div id="checkoutStatus">Press Pay Now after filling out the form.</div>
     </form>
   </main>
 
-  <script src="https://www.paypal.com/sdk/js?client-id=ARsX-6VTijURUORZFdX7W9xT3k3R_zgG_ANDJOeuedWRVN3n1jYyF8Y4pofQzan5TYagx7F_su4HdSP2&currency=USD"></script>
   <script>
 
 function simpleScentsCorrectPrice(item) {
@@ -152,8 +146,6 @@ function simpleScentsCorrectPriceText(item) {
 
 
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
-    let paypalButtonsRendered = false;
-    let latestOrderData = null;
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
@@ -165,7 +157,7 @@ function simpleScentsCorrectPriceText(item) {
     } else {
       checkoutItems = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
       checkoutItems.forEach(item => {
-        total += (simpleScentsCorrectPrice(item)) * (item.qty || 1);
+        total += simpleScentsCorrectPrice(item) * (item.qty || 1);
       });
     }
 
@@ -173,19 +165,22 @@ function simpleScentsCorrectPriceText(item) {
     let shipping = 0;
     let estimatedTax = 0;
     let finalTotal = 0;
-const stateField=document.getElementById("state");
-function updateTotals(){
- const st=(stateField.value||"").trim().toUpperCase();
- shipping = st==="CA" ? 4.99 : (st.length===2 ? 6.99 : 0);
- estimatedTax = total * TAX_RATE;
- finalTotal = total + shipping + estimatedTax;
- document.getElementById("subtotalDisplay").textContent="$"+total.toFixed(2);
- document.getElementById("shippingDisplay").textContent="$"+shipping.toFixed(2);
- document.getElementById("taxDisplay").textContent="$"+estimatedTax.toFixed(2);
- document.getElementById("orderTotal").textContent="Total: $"+finalTotal.toFixed(2);
-}
-stateField.addEventListener("input", updateTotals);
-updateTotals();
+
+    const stateField = document.getElementById("state");
+
+    function updateTotals() {
+      const st = (stateField.value || "").trim().toUpperCase();
+      shipping = st === "CA" ? 4.99 : (st.length === 2 ? 6.99 : 0);
+      estimatedTax = total * TAX_RATE;
+      finalTotal = total + shipping + estimatedTax;
+      document.getElementById("subtotalDisplay").textContent = "$" + total.toFixed(2);
+      document.getElementById("shippingDisplay").textContent = "$" + shipping.toFixed(2);
+      document.getElementById("taxDisplay").textContent = "$" + estimatedTax.toFixed(2);
+      document.getElementById("orderTotal").textContent = "Total: $" + finalTotal.toFixed(2);
+    }
+
+    stateField.addEventListener("input", updateTotals);
+    updateTotals();
 
     function getValidatedOrderData() {
       updateTotals();
@@ -256,7 +251,8 @@ updateTotals();
         shipping: "$" + shipping.toFixed(2),
         estimatedTax: "$" + estimatedTax.toFixed(2),
         orderTotal: "$" + finalTotal.toFixed(2),
-        orderItems
+        orderItems,
+        paymentStatus: "Payment button clicked - no PayPal connected"
       };
 
       if (hasEmail) {
@@ -286,103 +282,28 @@ updateTotals();
       document.querySelectorAll("#checkoutForm input").forEach(input => {
         input.readOnly = locked;
       });
-      document.getElementById("preparePayPalButton").disabled = locked;
+      document.getElementById("payNowButton").disabled = locked;
     }
 
-    function renderPayPalButtons() {
-      if (paypalButtonsRendered) {
-        document.getElementById("paypalStatus").textContent = "Use the PayPal button below. It will charge the exact total shown above.";
-        return;
-      }
-
-      if (!window.paypal) {
-        alert("PayPal did not load. Check your internet connection and try again.");
-        return;
-      }
-
-      paypalButtonsRendered = true;
-      document.getElementById("paypalStatus").textContent = "Use the PayPal button below. It will charge the exact total shown above.";
-
-      paypal.Buttons({
-        style: {
-          layout: "vertical",
-          color: "gold",
-          shape: "rect",
-          label: "paypal"
-        },
-        onClick: function(data, actions) {
-          latestOrderData = getValidatedOrderData();
-          if (!latestOrderData) {
-            return actions.reject();
-          }
-          lockCheckoutFields(true);
-          return actions.resolve();
-        },
-        createOrder: function(data, actions) {
-          updateTotals();
-          latestOrderData = getValidatedOrderData();
-          if (!latestOrderData) {
-            throw new Error("Checkout form is missing information.");
-          }
-
-          const exactTotal = finalTotal.toFixed(2);
-          return actions.order.create({
-            purchase_units: [{
-              description: "Simple Scents Order",
-              amount: {
-                currency_code: "USD",
-                value: exactTotal,
-                breakdown: {
-                  item_total: { currency_code: "USD", value: total.toFixed(2) },
-                  shipping: { currency_code: "USD", value: shipping.toFixed(2) },
-                  tax_total: { currency_code: "USD", value: estimatedTax.toFixed(2) }
-                }
-              }
-            }]
-          });
-        },
-        onCancel: function() {
-          lockCheckoutFields(false);
-          document.getElementById("paypalStatus").textContent = "Payment was cancelled. You can check your info and try again.";
-        },
-        onApprove: async function(data, actions) {
-          try {
-            const details = await actions.order.capture();
-            const paidData = {
-              ...latestOrderData,
-              paypalOrderID: data.orderID,
-              paypalPayerID: data.payerID || "",
-              paypalStatus: details.status || "COMPLETED",
-              paidAt: new Date().toISOString()
-            };
-
-            await sendOrderToFormspree(paidData);
-            localStorage.removeItem("buyNowItem");
-            localStorage.removeItem("simpleScentsCart");
-            localStorage.removeItem("checkoutMode");
-            alert("Payment complete. Thank you for your Simple Scents order!");
-            window.location.href = "index.html";
-          } catch (error) {
-            alert("Payment may have gone through, but the order info did not send correctly. Screenshot this page and contact Simple Scents.");
-            lockCheckoutFields(false);
-          }
-        },
-        onError: function(err) {
-          console.error(err);
-          alert("PayPal had an error. Please try again.");
-          lockCheckoutFields(false);
-        }
-      }).render("#paypal-button-container");
-    }
-
-    document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-    });
+      const orderData = getValidatedOrderData();
+      if (!orderData) return;
 
-    document.getElementById("preparePayPalButton").addEventListener("click", function() {
-      latestOrderData = getValidatedOrderData();
-      if (!latestOrderData) return;
-      renderPayPalButtons();
+      try {
+        lockCheckoutFields(true);
+        document.getElementById("checkoutStatus").textContent = "Sending order...";
+        await sendOrderToFormspree(orderData);
+        localStorage.removeItem("buyNowItem");
+        localStorage.removeItem("simpleScentsCart");
+        localStorage.removeItem("checkoutMode");
+        alert("Order info sent. Contact Simple Scents to finish payment.");
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Order info did not send. Please check your info and try again.");
+        document.getElementById("checkoutStatus").textContent = "Order did not send. Try again.";
+        lockCheckoutFields(false);
+      }
     });
   </script>
 </body>
