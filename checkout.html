@@ -125,7 +125,7 @@
       <div id="checkoutSummary" class="checkout-summary">
         <div>Subtotal: <span id="subtotalDisplay">$0.00</span></div>
         <div>Shipping: <span id="shippingDisplay">$0.00</span></div>
-        <div>Tax: <span id="taxDisplay">Calculated by Square if enabled</span></div>
+        <div>Tax: <span id="taxDisplay">Sales tax may be calculated by Square at checkout</span></div>
         <div id="orderTotal">Total: $0.00</div>
       </div>
 
@@ -216,7 +216,7 @@
       finalTotal = subtotal + shipping + estimatedTax;
       document.getElementById("subtotalDisplay").textContent = "$" + subtotal.toFixed(2);
       document.getElementById("shippingDisplay").textContent = "$" + shipping.toFixed(2);
-      document.getElementById("taxDisplay").textContent = "Square will calculate if enabled";
+      document.getElementById("taxDisplay").textContent = "Sales tax may be calculated by Square at checkout";
       document.getElementById("orderTotal").textContent = "Total before Square tax: $" + finalTotal.toFixed(2);
     }
 
