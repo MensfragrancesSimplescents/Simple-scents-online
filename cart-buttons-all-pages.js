@@ -50,10 +50,22 @@
     { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' }
   ];
 
+
+
+  function normalizeSquareUrl(url) {
+    url = String(url || '').trim();
+    if (!url) return '';
+    if (/^https?:\/\//i.test(url)) return url;
+    // Fix old saved cart/buy-now items that only stored the Square code like wAd4I8UD.
+    if (/^[A-Za-z0-9]+$/.test(url)) return 'https://square.link/u/' + url;
+    if (url.startsWith('/u/')) return 'https://square.link' + url;
+    return url;
+  }
+
   function squareLinkForProduct() {
     const match = SQUARE_LINKS.find(row => row.keys.some(k => titleClean.includes(clean(k))));
     if (!match) return null;
-    return /^1/.test(String(selectedSize).trim()) ? match.one : match.two;
+    return normalizeSquareUrl(/^1/.test(String(selectedSize).trim()) ? match.one : match.two);
   }
 
   function clean(text) {
