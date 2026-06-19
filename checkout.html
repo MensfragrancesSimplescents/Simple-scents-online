@@ -67,9 +67,23 @@
       font-size: 18px;
       line-height: 1.55;
     }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+    .summary-total {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #333;
+      font-weight: 800;
+    }
     .checkout-summary span {
-      float: right;
+      float: none;
       margin-left: 12px;
+      text-align: right;
+      white-space: nowrap;
     }
     #checkoutStatus {
       margin-top: 10px;
@@ -123,10 +137,9 @@
       <input id="zip" name="zip" type="text" inputmode="numeric" maxlength="5" required class="checkout-input">
 
       <div id="checkoutSummary" class="checkout-summary">
-        <div>Subtotal: <span id="subtotalDisplay">$0.00</span></div>
-        <div>Shipping: <span id="shippingDisplay">$0.00</span></div>
-        <div>Tax: <span id="taxDisplay">Sales tax may be calculated by Square at checkout</span></div>
-        <div id="orderTotal">Total: $0.00</div>
+        <div class="summary-row">Subtotal: <span id="subtotalDisplay">$0.00</span></div>
+        <div class="summary-row">Shipping: <span id="shippingDisplay">$0.00</span></div>
+        <div id="orderTotal" class="summary-row summary-total">Total: <span id="totalDisplay">$0.00</span></div>
       </div>
 
       <button type="submit" id="payNowButton">Pay Now</button>
@@ -216,8 +229,7 @@
       finalTotal = subtotal + shipping + estimatedTax;
       document.getElementById("subtotalDisplay").textContent = "$" + subtotal.toFixed(2);
       document.getElementById("shippingDisplay").textContent = "$" + shipping.toFixed(2);
-      document.getElementById("taxDisplay").textContent = "Sales tax may be calculated by Square at checkout";
-      document.getElementById("orderTotal").textContent = "Total before Square tax: $" + finalTotal.toFixed(2);
+      document.getElementById("totalDisplay").textContent = "$" + finalTotal.toFixed(2);
     }
 
     updateTotals();
@@ -291,8 +303,7 @@
         zip,
         subtotal: "$" + subtotal.toFixed(2),
         shipping: "$" + shipping.toFixed(2),
-        taxNote: "Tax is calculated by Square only if enabled in Square.",
-        orderTotalBeforeSquareTax: "$" + finalTotal.toFixed(2),
+        orderTotal: "$" + finalTotal.toFixed(2),
         orderItems,
         squarePaymentLink: paymentLinks,
         paymentStatus: "Order info sent to Formspree before redirecting to Square"
