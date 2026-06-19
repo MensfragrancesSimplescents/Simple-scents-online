@@ -28,6 +28,34 @@
     { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 2.49, two: 4.49 }
   ];
 
+
+
+  const SQUARE_LINKS = [
+    { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
+    { keys: ['acqua di gio profondo edp', 'acqua di gio profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4I8UD' },
+    { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
+    { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
+    { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUI9GB' },
+    { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 'https://square.link/u/OVkHLAQP', two: 'https://square.link/u/QgmcQcdk' },
+    { keys: ['guess seductive homme'], one: 'https://square.link/u/dqLsq39O', two: 'https://square.link/u/mWEmMUUj' },
+    { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/6IYkEL6D', two: 'https://square.link/u/gc8eDcmp' },
+    { keys: ['jpg le beau edt', 'jpg le beau'], one: 'https://square.link/u/pSJSc6Up', two: 'https://square.link/u/aqT1NUxy' },
+    { keys: ['jpg le male le parfum'], one: 'https://square.link/u/B0UfEWG3', two: 'https://square.link/u/erbxB7qj' },
+    { keys: ['jpg le male edt', 'jpg le male'], one: 'https://square.link/u/forYE1pR', two: 'https://square.link/u/6BFJEczt' },
+    { keys: ['mancera instant crush', 'instant crush'], one: 'https://square.link/u/ynoh8sUM', two: 'https://square.link/u/WQFo5fzE' },
+    { keys: ['nautica voyage'], one: 'https://square.link/u/grdqe0bB', two: 'https://square.link/u/9PDmNgnx' },
+    { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 'https://square.link/u/ObsdJ1PE', two: 'https://square.link/u/Coqo3qps' },
+    { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/tlrbQisJ', two: 'https://square.link/u/6NVnCXkp' },
+    { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/wF47g4Dx', two: 'https://square.link/u/zM75zY0e' },
+    { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' }
+  ];
+
+  function squareLinkForProduct() {
+    const match = SQUARE_LINKS.find(row => row.keys.some(k => titleClean.includes(clean(k))));
+    if (!match) return null;
+    return /^1/.test(String(selectedSize).trim()) ? match.one : match.two;
+  }
+
   function clean(text) {
     return String(text || '')
       .toLowerCase()
@@ -245,9 +273,13 @@
       event.stopPropagation();
     }
 
-    localStorage.setItem('checkoutMode', 'buyNow');
-    localStorage.setItem('buyNowItem', JSON.stringify(currentProduct()));
-    window.location.href = 'checkout.html';
+    const squareUrl = squareLinkForProduct();
+    if (squareUrl) {
+      window.location.href = squareUrl;
+      return;
+    }
+
+    alert('Square checkout link is missing for this fragrance.');
   }
 
   if (document.querySelector('.ss-bottom-bar')) return;
@@ -301,7 +333,7 @@
 
   const buyBtn = document.createElement('button');
   buyBtn.className = 'ss-buy';
-  buyBtn.innerText = 'Buy Now';
+  buyBtn.innerText = 'Pay Now';
   buyBtn.addEventListener('click', buyNow);
 
   bar.appendChild(addBtn);

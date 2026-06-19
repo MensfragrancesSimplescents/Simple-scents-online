@@ -1,0 +1,11 @@
+Upload/replace cart-buttons-all-pages.js in your GitHub Pages repo.
+
+What changed:
+- Product page Pay Now button now sends customers directly to the correct Square checkout link.
+- It uses the selected size: 1 mL or 2 mL.
+- Add to Cart still stays on your website, but Pay Now goes to Square.
+
+After uploading, test one product:
+1. Open a fragrance page.
+2. Select 1 mL, tap Pay Now, verify the Square item is the 1 mL version.
+3. Go back, select 2 mL, tap Pay Now, verify the Square item is the 2 mL version.
