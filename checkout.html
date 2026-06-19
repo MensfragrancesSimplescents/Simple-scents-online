@@ -125,7 +125,7 @@
       <div id="checkoutSummary" class="checkout-summary">
         <div>Subtotal: <span id="subtotalDisplay">$0.00</span></div>
         <div>Shipping: <span id="shippingDisplay">$0.00</span></div>
-        <div>Estimated Tax (8.25%): <span id="taxDisplay">$0.00</span></div>
+        <div>Tax: <span id="taxDisplay">Calculated by Square if enabled</span></div>
         <div id="orderTotal">Total: $0.00</div>
       </div>
 
@@ -135,57 +135,85 @@
   </main>
 
   <script>
-
-function simpleScentsCorrectPrice(item) {
-  return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
-}
-function simpleScentsCorrectPriceText(item) {
-  return "$" + simpleScentsCorrectPrice(item).toFixed(2);
-}
-
-
-
     const FORMSPREE_URL = "https://formspree.io/f/mdavngdy";
+    const SHIPPING_FEE = 6.00;
+
+    const SQUARE_LINKS = [
+      { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
+      { keys: ['acqua di gio profondo edp', 'acqua di gio profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4I8UD' },
+      { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
+      { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
+      { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUI9GB' },
+      { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 'https://square.link/u/OVkHLAQP', two: 'https://square.link/u/QgmcQcdk' },
+      { keys: ['guess seductive homme'], one: 'https://square.link/u/dqLsq39O', two: 'https://square.link/u/mWEmMUUj' },
+      { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/6IYkEL6D', two: 'https://square.link/u/gc8eDcmp' },
+      { keys: ['jpg le beau edt', 'jpg le beau'], one: 'https://square.link/u/pSJSc6Up', two: 'https://square.link/u/aqT1NUxy' },
+      { keys: ['jpg le male le parfum'], one: 'https://square.link/u/B0UfEWG3', two: 'https://square.link/u/erbxB7qj' },
+      { keys: ['jpg le male edt', 'jpg le male'], one: 'https://square.link/u/forYE1pR', two: 'https://square.link/u/6BFJEczt' },
+      { keys: ['mancera instant crush', 'instant crush'], one: 'https://square.link/u/ynoh8sUM', two: 'https://square.link/u/WQFo5fzE' },
+      { keys: ['nautica voyage'], one: 'https://square.link/u/grdqe0bB', two: 'https://square.link/u/9PDmNgnx' },
+      { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 'https://square.link/u/ObsdJ1PE', two: 'https://square.link/u/Coqo3qps' },
+      { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/tlrbQisJ', two: 'https://square.link/u/6NVnCXkp' },
+      { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/wF47g4Dx', two: 'https://square.link/u/zM75zY0e' },
+      { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' }
+    ];
+
+    function clean(text) {
+      return String(text || '')
+        .toLowerCase()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9 ]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function simpleScentsCorrectPrice(item) {
+      return parseFloat(String(item.price || "0").replace(/[^0-9.]/g, "")) || 0;
+    }
+
+    function squareLinkForItem(item) {
+      if (item.squareUrl) return item.squareUrl;
+      const name = clean(item.name || '');
+      const size = clean(item.size || '2ml');
+      const row = SQUARE_LINKS.find(r => r.keys.some(k => name.includes(clean(k)) || clean(k).includes(name)));
+      if (!row) return '';
+      return size.includes('1 ml') || size.includes('1ml') ? row.one : row.two;
+    }
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
-    let total = 0;
+    let subtotal = 0;
 
     if (buyNowItem) {
       checkoutItems = [{...buyNowItem, qty: 1}];
-      total = simpleScentsCorrectPrice(buyNowItem);
     } else {
       checkoutItems = JSON.parse(localStorage.getItem("simpleScentsCart") || "[]");
-      checkoutItems.forEach(item => {
-        total += simpleScentsCorrectPrice(item) * (item.qty || 1);
-      });
     }
 
-    const TAX_RATE = 0.0825;
-    let shipping = 0;
-    let estimatedTax = 0;
-    let finalTotal = 0;
+    checkoutItems.forEach(item => {
+      subtotal += simpleScentsCorrectPrice(item) * (item.qty || 1);
+    });
 
-    const stateField = document.getElementById("state");
+    let shipping = checkoutItems.length ? SHIPPING_FEE : 0;
+    let estimatedTax = 0;
+    let finalTotal = subtotal + shipping + estimatedTax;
 
     function updateTotals() {
-      const st = (stateField.value || "").trim().toUpperCase();
-      shipping = st === "CA" ? 4.99 : (st.length === 2 ? 6.99 : 0);
-      estimatedTax = total * TAX_RATE;
-      finalTotal = total + shipping + estimatedTax;
-      document.getElementById("subtotalDisplay").textContent = "$" + total.toFixed(2);
+      shipping = checkoutItems.length ? SHIPPING_FEE : 0;
+      estimatedTax = 0;
+      finalTotal = subtotal + shipping + estimatedTax;
+      document.getElementById("subtotalDisplay").textContent = "$" + subtotal.toFixed(2);
       document.getElementById("shippingDisplay").textContent = "$" + shipping.toFixed(2);
-      document.getElementById("taxDisplay").textContent = "$" + estimatedTax.toFixed(2);
-      document.getElementById("orderTotal").textContent = "Total: $" + finalTotal.toFixed(2);
+      document.getElementById("taxDisplay").textContent = "Square will calculate if enabled";
+      document.getElementById("orderTotal").textContent = "Total before Square tax: $" + finalTotal.toFixed(2);
     }
 
-    stateField.addEventListener("input", updateTotals);
     updateTotals();
 
     function getValidatedOrderData() {
       updateTotals();
 
-      if (!checkoutItems.length || total <= 0) {
+      if (!checkoutItems.length || subtotal <= 0) {
         alert("Your cart is empty. Add a fragrance before checkout.");
         return null;
       }
@@ -234,8 +262,10 @@ function simpleScentsCorrectPriceText(item) {
       }
 
       const orderItems = checkoutItems.map(item => {
-        return `${item.name || "Item"} (${item.size || "sample"}) x${item.qty || 1} - ${simpleScentsCorrectPriceText(item)}`;
+        return `${item.name || "Item"} (${item.size || "sample"}) x${item.qty || 1} - $${simpleScentsCorrectPrice(item).toFixed(2)}`;
       }).join("\n");
+
+      const paymentLinks = checkoutItems.map(item => squareLinkForItem(item)).filter(Boolean).join("\n");
 
       const orderData = {
         contactMethod: hasEmail && hasPhone ? "Email and phone" : hasEmail ? "Email" : "Phone",
@@ -247,12 +277,13 @@ function simpleScentsCorrectPriceText(item) {
         city,
         state,
         zip,
-        subtotal: "$" + total.toFixed(2),
+        subtotal: "$" + subtotal.toFixed(2),
         shipping: "$" + shipping.toFixed(2),
-        estimatedTax: "$" + estimatedTax.toFixed(2),
-        orderTotal: "$" + finalTotal.toFixed(2),
+        taxNote: "Tax is calculated by Square only if enabled in Square.",
+        orderTotalBeforeSquareTax: "$" + finalTotal.toFixed(2),
         orderItems,
-        paymentStatus: "Payment button clicked - no PayPal connected"
+        squarePaymentLink: paymentLinks,
+        paymentStatus: "Order info sent to Formspree before redirecting to Square"
       };
 
       if (hasEmail) {
@@ -285,20 +316,32 @@ function simpleScentsCorrectPriceText(item) {
       document.getElementById("payNowButton").disabled = locked;
     }
 
+    function getCheckoutSquareUrl() {
+      if (checkoutItems.length === 1 && (checkoutItems[0].qty || 1) === 1) {
+        return squareLinkForItem(checkoutItems[0]);
+      }
+      return "";
+    }
+
     document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const orderData = getValidatedOrderData();
       if (!orderData) return;
 
+      const squareUrl = getCheckoutSquareUrl();
+      if (!squareUrl) {
+        alert("This checkout can only redirect automatically to Square for one fragrance sample at a time. Remove extra items or quantities, then try again.");
+        return;
+      }
+
       try {
         lockCheckoutFields(true);
-        document.getElementById("checkoutStatus").textContent = "Sending order...";
+        document.getElementById("checkoutStatus").textContent = "Sending order info, then opening Square...";
         await sendOrderToFormspree(orderData);
         localStorage.removeItem("buyNowItem");
         localStorage.removeItem("simpleScentsCart");
         localStorage.removeItem("checkoutMode");
-        alert("Order info sent. Contact Simple Scents to finish payment.");
-        window.location.href = "index.html";
+        window.location.href = squareUrl;
       } catch (error) {
         alert("Order info did not send. Please check your info and try again.");
         document.getElementById("checkoutStatus").textContent = "Order did not send. Try again.";

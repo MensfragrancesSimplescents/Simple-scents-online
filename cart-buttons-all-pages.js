@@ -246,6 +246,7 @@
       price: selectedPrice.toFixed(2),
       size: selectedSize + ' sample',
       page: window.location.pathname,
+      squareUrl: squareLinkForProduct(),
       qty: 1
     };
   }
@@ -273,13 +274,15 @@
       event.stopPropagation();
     }
 
-    const squareUrl = squareLinkForProduct();
-    if (squareUrl) {
-      window.location.href = squareUrl;
+    const product = currentProduct();
+    if (!product.squareUrl) {
+      alert('Square checkout link is missing for this fragrance.');
       return;
     }
 
-    alert('Square checkout link is missing for this fragrance.');
+    localStorage.setItem('checkoutMode', 'buyNow');
+    localStorage.setItem('buyNowItem', JSON.stringify(product));
+    window.location.href = 'checkout.html';
   }
 
   if (document.querySelector('.ss-bottom-bar')) return;

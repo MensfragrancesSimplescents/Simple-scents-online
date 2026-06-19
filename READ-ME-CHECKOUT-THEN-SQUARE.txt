@@ -1,0 +1,14 @@
+Upload these files to your GitHub repo and replace the old versions:
+
+- checkout.html
+- cart-buttons-all-pages.js
+
+What this update does:
+1. Pay Now on fragrance pages goes to your checkout form first.
+2. The checkout form still sends customer info to Formspree.
+3. After Formspree accepts the order info, the customer is redirected to the matching Square checkout link for that exact fragrance and size.
+4. The checkout page shows $6.00 shipping. Square should also add the $6.00 shipping because you set up the Square shipping profile.
+
+Important:
+- Automatic Square redirect is exact for one sample at a time.
+- A cart with multiple different items cannot be sent to one exact Square link because Square payment links are single-item links.
