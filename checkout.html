@@ -358,14 +358,14 @@
 
       try {
         lockCheckoutFields(true);
-        document.getElementById("checkoutStatus").textContent = "Opening Square checkout...";
+        document.getElementById("checkoutStatus").textContent = "Sending order info, then opening Square...";
         sendOrderToFormspree(orderData);
         localStorage.removeItem("buyNowItem");
         localStorage.removeItem("simpleScentsCart");
         localStorage.removeItem("checkoutMode");
         setTimeout(function() {
           window.location.assign(normalizeSquareUrl(squareUrl));
-        }, 300);
+        }, 1200);
       } catch (error) {
         window.location.assign(normalizeSquareUrl(squareUrl));
       }
