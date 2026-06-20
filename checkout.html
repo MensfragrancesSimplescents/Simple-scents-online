@@ -221,12 +221,12 @@
     });
 
     let shipping = checkoutItems.length ? SHIPPING_FEE : 0;
-    let estimatedTax = (subtotal + shipping) * 0.0825;
+    let estimatedTax = subtotal * 0.0825;
     let finalTotal = subtotal + shipping + estimatedTax;
 
     function updateTotals() {
       shipping = checkoutItems.length ? SHIPPING_FEE : 0;
-      estimatedTax = (subtotal + shipping) * 0.0825;
+      estimatedTax = subtotal * 0.0825;
       finalTotal = subtotal + shipping + estimatedTax;
       document.getElementById("taxDisplay").textContent = "$" + estimatedTax.toFixed(2);
       document.getElementById("subtotalDisplay").textContent = "$" + subtotal.toFixed(2);
