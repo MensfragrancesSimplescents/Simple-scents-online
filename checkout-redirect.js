@@ -24,7 +24,7 @@ document.addEventListener('click', function(e) {
     localStorage.setItem('checkoutMode', 'buyNow');
     localStorage.setItem('buyNowItem', JSON.stringify({ name, price, size, page: window.location.pathname, qty: 1 }));
     e.preventDefault();
-    window.location.href = 'checkout.html';
+    
     return;
   }
 
@@ -32,6 +32,6 @@ document.addEventListener('click', function(e) {
     localStorage.setItem('checkoutMode', 'cart');
     localStorage.removeItem('buyNowItem');
     e.preventDefault();
-    window.location.href = 'checkout.html';
+    
   }
 });
