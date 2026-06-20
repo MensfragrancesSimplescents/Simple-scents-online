@@ -187,10 +187,11 @@
       url = String(url || '').trim();
       if (!url) return '';
       if (/^https?:\/\//i.test(url)) return url;
-      // Fix old saved cart/buy-now items that only stored the Square code like wAd4I8UD.
-      if (/^[A-Za-z0-9]+$/.test(url)) return 'https://square.link/u/' + url;
+      if (url.startsWith('square.link/u/')) return 'https://' + url;
       if (url.startsWith('/u/')) return 'https://square.link' + url;
-      return url;
+      if (url.startsWith('u/')) return 'https://square.link/' + url;
+      if (/^[A-Za-z0-9]+$/.test(url)) return 'https://square.link/u/' + url;
+      return 'https://square.link/u/' + url.replace(/^\/+/, '');
     }
 
     function simpleScentsCorrectPrice(item) {
@@ -372,10 +373,10 @@
         localStorage.removeItem("simpleScentsCart");
         localStorage.removeItem("checkoutMode");
         setTimeout(function() {
-          window.location.href = normalizeSquareUrl(squareUrl);
+          window.location.assign(normalizeSquareUrl(squareUrl));
         }, 300);
       } catch (error) {
-        window.location.href = normalizeSquareUrl(squareUrl);
+        window.location.assign(normalizeSquareUrl(squareUrl));
       }
     });
   </script>
