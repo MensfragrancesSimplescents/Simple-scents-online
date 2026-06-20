@@ -106,7 +106,7 @@
       <h1>Checkout</h1>
     </div>
 
-    <form id="checkoutForm">
+    <form id="checkoutForm" onsubmit="return false;">
       <label>Email</label>
       <input id="email" name="email" type="email" class="checkout-input">
 
@@ -348,6 +348,14 @@
       return "";
     }
 
+
+    function safeOpenSquareCheckout(squareUrl) {
+      const finalUrl = normalizeSquareUrl(squareUrl);
+      const status = document.getElementById("checkoutStatus");
+      status.innerHTML = 'Opening Square checkout... <br><a href="' + finalUrl + '" style="color:white;text-decoration:underline;">Tap here if Square does not open</a>';
+      window.location.href = finalUrl;
+    }
+
     document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const orderData = getValidatedOrderData();
@@ -366,7 +374,7 @@
         localStorage.removeItem("buyNowItem");
         localStorage.removeItem("simpleScentsCart");
         localStorage.removeItem("checkoutMode");
-        window.location.assign(normalizeSquareUrl(squareUrl));
+        safeOpenSquareCheckout(squareUrl);
       } catch (error) {
         alert("Order info did not send. Please check your info and try again.");
         document.getElementById("checkoutStatus").textContent = "Order did not send. Try again.";
