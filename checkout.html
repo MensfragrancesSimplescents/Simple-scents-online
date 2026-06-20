@@ -139,6 +139,7 @@
       <div id="checkoutSummary" class="checkout-summary">
         <div class="summary-row">Subtotal: <span id="subtotalDisplay">$0.00</span></div>
         <div class="summary-row">Shipping: <span id="shippingDisplay">$0.00</span></div>
+        <div class="summary-row">Estimated Tax (8.25%): <span id="taxDisplay">$0.00</span></div>
         <div id="orderTotal" class="summary-row summary-total">Total: <span id="totalDisplay">$0.00</span></div>
       </div>
 
@@ -220,13 +221,14 @@
     });
 
     let shipping = checkoutItems.length ? SHIPPING_FEE : 0;
-    let estimatedTax = 0;
+    let estimatedTax = (subtotal + shipping) * 0.0825;
     let finalTotal = subtotal + shipping + estimatedTax;
 
     function updateTotals() {
       shipping = checkoutItems.length ? SHIPPING_FEE : 0;
-      estimatedTax = 0;
+      estimatedTax = (subtotal + shipping) * 0.0825;
       finalTotal = subtotal + shipping + estimatedTax;
+      document.getElementById("taxDisplay").textContent = "$" + estimatedTax.toFixed(2);
       document.getElementById("subtotalDisplay").textContent = "$" + subtotal.toFixed(2);
       document.getElementById("shippingDisplay").textContent = "$" + shipping.toFixed(2);
       document.getElementById("totalDisplay").textContent = "$" + finalTotal.toFixed(2);
