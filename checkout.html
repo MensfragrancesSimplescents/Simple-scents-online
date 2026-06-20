@@ -321,23 +321,14 @@
     }
 
     function sendOrderToFormspree(orderData) {
-      // Send the order info in the background so Safari does NOT open or download the Formspree page.
       const formData = new FormData();
       Object.keys(orderData).forEach(key => formData.append(key, orderData[key]));
-
-      if (navigator.sendBeacon) {
-        try {
-          navigator.sendBeacon(FORMSPREE_URL, formData);
-          return;
-        } catch (err) {}
-      }
-
       fetch(FORMSPREE_URL, {
         method: "POST",
         body: formData,
-        mode: "no-cors",
+        headers: {"Accept":"application/json"},
         keepalive: true
-      }).catch(function() {});
+      }).catch(() => {});
     }
 
     function lockCheckoutFields(locked) {
