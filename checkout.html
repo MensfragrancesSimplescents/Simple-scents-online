@@ -106,7 +106,7 @@
       <h1>Checkout</h1>
     </div>
 
-    <form id="checkoutForm" onsubmit="return false;">
+    <form id="checkoutForm">
       <label>Email</label>
       <input id="email" name="email" type="email" class="checkout-input">
 
@@ -319,19 +319,24 @@
       return orderData;
     }
 
-    async function sendOrderToFormspree(orderData) {
-      const response = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(orderData)
-      });
+    function sendOrderToFormspree(orderData) {
+      // Send the order info in the background so Safari does NOT open or download the Formspree page.
+      const formData = new FormData();
+      Object.keys(orderData).forEach(key => formData.append(key, orderData[key]));
 
-      if (!response.ok) {
-        throw new Error("Formspree did not accept the order info.");
+      if (navigator.sendBeacon) {
+        try {
+          navigator.sendBeacon(FORMSPREE_URL, formData);
+          return;
+        } catch (err) {}
       }
+
+      fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+        keepalive: true
+      }).catch(function() {});
     }
 
     function lockCheckoutFields(locked) {
@@ -348,14 +353,6 @@
       return "";
     }
 
-
-    function safeOpenSquareCheckout(squareUrl) {
-      const finalUrl = normalizeSquareUrl(squareUrl);
-      const status = document.getElementById("checkoutStatus");
-      status.innerHTML = 'Opening Square checkout... <br><a href="' + finalUrl + '" style="color:white;text-decoration:underline;">Tap here if Square does not open</a>';
-      window.location.href = finalUrl;
-    }
-
     document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const orderData = getValidatedOrderData();
@@ -369,16 +366,16 @@
 
       try {
         lockCheckoutFields(true);
-        document.getElementById("checkoutStatus").textContent = "Sending order info, then opening Square...";
-        await sendOrderToFormspree(orderData);
+        document.getElementById("checkoutStatus").textContent = "Opening Square checkout...";
+        sendOrderToFormspree(orderData);
         localStorage.removeItem("buyNowItem");
         localStorage.removeItem("simpleScentsCart");
         localStorage.removeItem("checkoutMode");
-        safeOpenSquareCheckout(squareUrl);
+        setTimeout(function() {
+          window.location.href = normalizeSquareUrl(squareUrl);
+        }, 300);
       } catch (error) {
-        alert("Order info did not send. Please check your info and try again.");
-        document.getElementById("checkoutStatus").textContent = "Order did not send. Try again.";
-        lockCheckoutFields(false);
+        window.location.href = normalizeSquareUrl(squareUrl);
       }
     });
   </script>
