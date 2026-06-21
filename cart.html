@@ -301,7 +301,7 @@ function removeItem(index) {
     function checkout() {
       localStorage.setItem("checkoutMode", "cart");
       localStorage.removeItem("buyNowItem");
-      window.location.href = "checkout.html";
+      window.location.href = "checkout-square.html";
     }
 
     renderCart();
@@ -370,7 +370,7 @@ function removeItem(index) {
     const isCheckout =
       text === "checkout" ||
       text.includes("checkout") ||
-      href.includes("checkout.html");
+      href.includes("checkout-square.html");
 
     if (!isCheckout) return;
 

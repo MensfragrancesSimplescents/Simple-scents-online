@@ -98,7 +98,7 @@ function simpleScentsCorrectPriceText(item) {
 
     localStorage.setItem("checkoutMode", "buyNow");
     localStorage.setItem("buyNowItem", JSON.stringify(product));
-    window.location.href = "checkout.html";
+    window.location.href = "checkout-square.html";
   }
 
   if (document.querySelector(".ss-bottom-bar")) return;

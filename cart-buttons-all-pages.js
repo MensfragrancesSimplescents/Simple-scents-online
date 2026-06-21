@@ -4,7 +4,7 @@
   const file = path.split('/').pop();
 
   // Do NOT show Add to Cart / Buy Now on homepage or cart page
-  if (file === '' || file === 'index.html' || file === 'cart.html' || file === 'checkout.html' || path.endsWith('/')) {
+  if (file === '' || file === 'index.html' || file === 'cart.html' || file === 'checkout-square.html' || path.endsWith('/')) {
     return;
   }
 
@@ -294,7 +294,7 @@
 
     localStorage.setItem('checkoutMode', 'buyNow');
     localStorage.setItem('buyNowItem', JSON.stringify(product));
-    window.location.href = 'checkout.html';
+    window.location.href = 'checkout-square.html';
   }
 
   if (document.querySelector('.ss-bottom-bar')) return;

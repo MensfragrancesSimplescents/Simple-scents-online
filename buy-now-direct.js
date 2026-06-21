@@ -33,7 +33,7 @@ function openDirectCheckout() {
   };
 
   localStorage.setItem("buyNowItem", JSON.stringify(item));
-  window.location.href = "checkout.html";
+  window.location.href = "checkout-square.html";
 }
 
 
