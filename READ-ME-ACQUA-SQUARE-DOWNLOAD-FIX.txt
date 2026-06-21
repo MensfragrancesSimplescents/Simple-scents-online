@@ -1,0 +1,10 @@
+Upload/replace these 2 files in your GitHub repo:
+
+1. checkout-square.html
+2. cart-buttons-all-pages.js
+
+This fixes Acqua/Aqua Di Gio Profondo 2 mL so Pay Now opens the full Square link:
+https://square.link/u/wAd4I8UD
+
+It also fixes older saved cart/buy-now data that only saved wAd4I8UD.
+After uploading, refresh Safari and try Acqua Di Gio Profondo 2 mL again.
