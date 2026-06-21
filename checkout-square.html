@@ -172,6 +172,21 @@
       { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' }
     ];
 
+    
+    function forceFullSquareUrl(url) {
+      url = String(url || '').trim();
+      if (!url) return '';
+      if (url === 'wAd4I8UD') return 'https://square.link/u/wAd4I8UD';
+      if (url === 'IMkUI9GB') return 'https://square.link/u/IMkUl9GB';
+      if (url === 'IMkUl9GB') return 'https://square.link/u/IMkUl9GB';
+      if (/^https?:\/\//i.test(url)) return url;
+      if (url.startsWith('square.link/u/')) return 'https://' + url;
+      if (url.startsWith('/u/')) return 'https://square.link' + url;
+      if (url.startsWith('u/')) return 'https://square.link/' + url;
+      if (/^[A-Za-z0-9]+$/.test(url)) return 'https://square.link/u/' + url;
+      return url;
+    }
+
     function clean(text) {
       return String(text || '')
         .toLowerCase()
@@ -208,16 +223,20 @@
     }
 
     
-    function fixOldAromaticCitrusLink() {
+    function fixOldBareSquareCodes() {
       ["buyNowItem", "simpleScentsCart"].forEach(function(key) {
         try {
           const raw = localStorage.getItem(key);
           if (!raw) return;
-          localStorage.setItem(key, raw.replace(/IMkUI9GB/g, "IMkUl9GB"));
-        } catch (e) {}
+          const fixed = raw
+            .replace(/"wAd4I8UD"/g, '"https://square.link/u/wAd4I8UD"')
+            .replace(/"IMkUI9GB"/g, '"https://square.link/u/IMkUl9GB"')
+            .replace(/"IMkUl9GB"/g, '"https://square.link/u/IMkUl9GB"');
+          if (fixed !== raw) localStorage.setItem(key, fixed);
+        } catch(e) {}
       });
     }
-    fixOldAromaticCitrusLink();
+    fixOldBareSquareCodes();
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
@@ -380,7 +399,7 @@
           window.location.assign(safeSquareUrl);
         }, 1200);
       } catch (error) {
-        window.location.assign(normalizeSquareUrl(squareUrl));
+        window.location.assign(forceFullSquareUrl(squareUrl));
       }
     });
   </script>
