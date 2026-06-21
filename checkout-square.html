@@ -172,13 +172,6 @@
       { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' }
     ];
 
-    
-    function forceAcquaFullSquareUrl(url) {
-      url = String(url || '').trim();
-      if (url === "wAd4I8UD") return "https://square.link/u/wAd4I8UD";
-      return url;
-    }
-
     function clean(text) {
       return String(text || '')
         .toLowerCase()
@@ -215,7 +208,7 @@
     }
 
     
-    function fixOldAcquaSquareLink() {
+    function fixOldAcquaSavedLink() {
       ["buyNowItem", "simpleScentsCart"].forEach(function(key) {
         try {
           const raw = localStorage.getItem(key);
@@ -225,7 +218,7 @@
         } catch(e) {}
       });
     }
-    fixOldAcquaSquareLink();
+    fixOldAcquaSavedLink();
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
@@ -370,7 +363,8 @@
       const orderData = getValidatedOrderData();
       if (!orderData) return;
 
-      const squareUrl = getCheckoutSquareUrl();
+      let squareUrl = getCheckoutSquareUrl();
+      if (squareUrl === 'wAd4I8UD') squareUrl = 'https://square.link/u/wAd4I8UD';
       if (!squareUrl) {
         alert("This checkout can only redirect automatically to Square for one fragrance sample at a time. Remove extra items or quantities, then try again.");
         return;
