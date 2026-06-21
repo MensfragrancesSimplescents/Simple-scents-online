@@ -32,7 +32,7 @@
 
   const SQUARE_LINKS = [
     { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
-    { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4I8UD' },
+    { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4l8UD' },
     { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
     { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
     { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUl9GB' },
@@ -65,7 +65,7 @@
   function squareLinkForProduct() {
     // Hard fix for Acqua/Aqua Di Gio Profondo so Safari never opens the bare code as a download.
     if ((titleClean.includes('acqua') || titleClean.includes('aqua')) && titleClean.includes('gio') && titleClean.includes('profondo')) {
-      return /^1/.test(String(selectedSize).trim()) ? 'https://square.link/u/pDDGO7sW' : 'https://square.link/u/wAd4I8UD';
+      return /^1/.test(String(selectedSize).trim()) ? 'https://square.link/u/pDDGO7sW' : 'https://square.link/u/wAd4l8UD';
     }
     const match = SQUARE_LINKS.find(row => row.keys.some(k => titleClean.includes(clean(k))));
     if (!match) return null;
