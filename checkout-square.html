@@ -222,12 +222,7 @@
         alert('Square link is broken. Please try again.');
         return;
       }
-      const a = document.createElement('a');
-      a.href = safeSquareUrl;
-      a.target = '_self';
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
+      window.location.href = safeSquareUrl;
     }
 
     
