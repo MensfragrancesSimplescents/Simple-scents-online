@@ -157,7 +157,7 @@
       { keys: ['acqua di gio profondo edp', 'acqua di gio profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4I8UD' },
       { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
       { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
-      { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUl9GB' },
+      { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUI9GB' },
       { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 'https://square.link/u/OVkHLAQP', two: 'https://square.link/u/QgmcQcdk' },
       { keys: ['guess seductive homme'], one: 'https://square.link/u/dqLsq39O', two: 'https://square.link/u/mWEmMUUj' },
       { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/6IYkEL6D', two: 'https://square.link/u/gc8eDcmp' },
@@ -173,17 +173,9 @@
     ];
 
     
-    function forceFullSquareUrl(url) {
+    function forceAcquaFullSquareUrl(url) {
       url = String(url || '').trim();
-      if (!url) return '';
-      if (url === 'wAd4I8UD') return 'https://square.link/u/wAd4I8UD';
-      if (url === 'IMkUI9GB') return 'https://square.link/u/IMkUl9GB';
-      if (url === 'IMkUl9GB') return 'https://square.link/u/IMkUl9GB';
-      if (/^https?:\/\//i.test(url)) return url;
-      if (url.startsWith('square.link/u/')) return 'https://' + url;
-      if (url.startsWith('/u/')) return 'https://square.link' + url;
-      if (url.startsWith('u/')) return 'https://square.link/' + url;
-      if (/^[A-Za-z0-9]+$/.test(url)) return 'https://square.link/u/' + url;
+      if (url === "wAd4I8UD") return "https://square.link/u/wAd4I8UD";
       return url;
     }
 
@@ -223,20 +215,17 @@
     }
 
     
-    function fixOldBareSquareCodes() {
+    function fixOldAcquaSquareLink() {
       ["buyNowItem", "simpleScentsCart"].forEach(function(key) {
         try {
           const raw = localStorage.getItem(key);
           if (!raw) return;
-          const fixed = raw
-            .replace(/"wAd4I8UD"/g, '"https://square.link/u/wAd4I8UD"')
-            .replace(/"IMkUI9GB"/g, '"https://square.link/u/IMkUl9GB"')
-            .replace(/"IMkUl9GB"/g, '"https://square.link/u/IMkUl9GB"');
+          const fixed = raw.replace(/"wAd4I8UD"/g, '"https://square.link/u/wAd4I8UD"');
           if (fixed !== raw) localStorage.setItem(key, fixed);
         } catch(e) {}
       });
     }
-    fixOldBareSquareCodes();
+    fixOldAcquaSquareLink();
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
     let checkoutItems = [];
@@ -399,7 +388,7 @@
           window.location.assign(safeSquareUrl);
         }, 1200);
       } catch (error) {
-        window.location.assign(forceFullSquareUrl(squareUrl));
+        window.location.assign(normalizeSquareUrl(squareUrl));
       }
     });
   </script>
