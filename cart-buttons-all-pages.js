@@ -10,7 +10,7 @@
 
   const PRICE_MAP = [
     { keys: ['jpg le male le parfum'], one: 4.49, two: 7.99 },
-    { keys: ['jpg le male edt', 'jpg le male'], one: 3.49, two: 6.99 },
+    { keys: ['jpg le male edt'], one: 3.49, two: 6.99 },
     { keys: ['jpg le beau edt', 'jpg le beau'], one: 4.49, two: 6.49 },
     { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 4.99, two: 7.49 },
     { keys: ['acqua di gio profondo edp', 'acqua di gio profondo'], one: 3.99, two: 6.49 },
@@ -41,7 +41,7 @@
     { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/6IYkEL6D', two: 'https://square.link/u/gc8eDcmp' },
     { keys: ['jpg le beau edt', 'jpg le beau'], one: 'https://square.link/u/pSJSc6Up', two: 'https://square.link/u/aqT1NUxy' },
     { keys: ['jpg le male le parfum'], one: 'https://square.link/u/B0UfEWG3', two: 'https://square.link/u/erbxB7aj' },
-    { keys: ['jpg le male edt', 'jpg le male'], one: 'https://square.link/u/forYE1pR', two: 'https://square.link/u/V5Sg8NHV' },
+    { keys: ['jpg le male edt'], one: 'https://square.link/u/forYE1pR', two: 'https://square.link/u/V5Sg8NHV' },
     { keys: ['mancera instant crush', 'instant crush'], one: 'https://square.link/u/ynoh8sUM', two: 'https://square.link/u/WQFo5fzE' },
     { keys: ['nautica voyage'], one: 'https://square.link/u/grdqe0bB', two: 'https://square.link/u/9PDmNgnx' },
     { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 'https://square.link/u/ObsdJ1PE', two: 'https://square.link/u/Coqo3qps' },
