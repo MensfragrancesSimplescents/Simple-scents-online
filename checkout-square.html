@@ -154,7 +154,7 @@
 
     const SQUARE_LINKS = [
       { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
-      { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4I8UD' },
+      { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4l8UD' },
       { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
       { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
       { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUI9GB' },
@@ -206,9 +206,9 @@
       // Hard fix for Acqua/Aqua Di Gio Profondo 2 mL: never use the bare code by itself.
       if ((name.includes('acqua') || name.includes('aqua')) && name.includes('gio') && name.includes('profondo')) {
         const isOneMl = size.includes('1 ml') || size.includes('1ml');
-        return isOneMl ? 'https://square.link/u/pDDGO7sW' : 'https://square.link/u/wAd4I8UD';
+        return isOneMl ? 'https://square.link/u/pDDGO7sW' : 'https://square.link/u/wAd4l8UD';
       }
-      if (saved === 'wad4i8ud') return 'https://square.link/u/wAd4I8UD';
+      if (saved === 'wad4i8ud') return 'https://square.link/u/wAd4l8UD';
 
       const row = SQUARE_LINKS.find(r => r.keys.some(k => name.includes(clean(k)) || clean(k).includes(name)));
       if (!row) return normalizeSquareUrl(item.squareUrl || '');
@@ -236,7 +236,7 @@
         try {
           const raw = localStorage.getItem(key);
           if (!raw) return;
-          const fixed = raw.replace(/"wAd4I8UD"/g, '"https://square.link/u/wAd4I8UD"');
+          const fixed = raw.replace(/"wAd4l8UD"/g, '"https://square.link/u/wAd4l8UD"');
           if (fixed !== raw) localStorage.setItem(key, fixed);
         } catch(e) {}
       });
@@ -387,7 +387,7 @@
       if (!orderData) return;
 
       let squareUrl = getCheckoutSquareUrl();
-      if (squareUrl === 'wAd4I8UD') squareUrl = 'https://square.link/u/wAd4I8UD';
+      if (squareUrl === 'wAd4l8UD') squareUrl = 'https://square.link/u/wAd4l8UD';
       if (!squareUrl) {
         alert("This checkout can only redirect automatically to Square for one fragrance sample at a time. Remove extra items or quantities, then try again.");
         return;
