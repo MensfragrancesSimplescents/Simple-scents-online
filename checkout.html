@@ -202,9 +202,8 @@
       const name = clean(item.name || '');
       const size = clean(item.size || '2ml');
       const row = SQUARE_LINKS.find(r => r.keys.some(k => name.includes(clean(k)) || clean(k).includes(name)));
-      if (!row) return normalizeSquareUrl(item.squareUrl || '');
-      const isOneMl = size.includes('1 ml') || size.includes('1ml');
-      return normalizeSquareUrl(isOneMl ? row.one : row.two);
+      if (!row) return '';
+      return size.includes('1 ml') || size.includes('1ml') ? row.one : row.two;
     }
 
     const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem") || "null");
