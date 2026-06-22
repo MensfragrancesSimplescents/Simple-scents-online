@@ -331,7 +331,9 @@ if (info) {
   `;
   document.head.appendChild(bottomStyle);
 
+  if (!titleClean.includes('fresh discovery pack')) {
   installSizeSelector();
+}
 
   const bar = document.createElement('div');
   bar.className = 'ss-bottom-bar';
