@@ -131,14 +131,19 @@
     }) || candidates.find(el => /\$\d/.test(el.innerText || ''));
   }
 
-  function setSelectedSize(size, price) {
-    selectedSize = size;
-    selectedPrice = Number(price);
-    localStorage.setItem('simpleScentsSelectedSize', selectedSize);
-    localStorage.setItem('simpleScentsSelectedPrice', String(selectedPrice));
-    document.body.dataset.selectedSize = selectedSize;
-    document.body.dataset.selectedPrice = String(selectedPrice);
+function setSelectedSize(size, price) {
+  selectedSize = size;
+  selectedPrice = Number(price);
+  localStorage.setItem('simpleScentsSelectedSize', selectedSize);
+  localStorage.setItem('simpleScentsSelectedPrice', String(selectedPrice));
+  document.body.dataset.selectedSize = selectedSize;
+  document.body.dataset.selectedPrice = String(selectedPrice);
+
+  const priceEl = findMainPriceElement();
+  if (priceEl) {
+    priceEl.innerText = `${money(price)} • ${size.toLowerCase()} sample`;
   }
+}
 
   function installSizeSelector() {
     if (document.querySelector('.ss-size-box')) {
