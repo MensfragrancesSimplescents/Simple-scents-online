@@ -217,13 +217,13 @@
     const swipeHint = Array.from(document.querySelectorAll('p,div,span'))
       .find(el => /swipe/i.test(el.innerText || '') && /photo|image|left|right/i.test(el.innerText || ''));
 
-    if (swipeHint) {
-      swipeHint.insertAdjacentElement('afterend', box);
-    } else {
-      const gallery = document.querySelector('img')?.parentElement;
-      if (gallery) gallery.insertAdjacentElement('afterend', box);
-      else document.body.insertBefore(box, document.body.firstChild);
-    }
+    const info = document.querySelector('.info');
+
+if (info) {
+  info.insertAdjacentElement('beforebegin', box);
+} else {
+  document.body.appendChild(box);
+}
 
     box.querySelectorAll('.ss-size-option').forEach(btn => {
       btn.addEventListener('click', () => {
