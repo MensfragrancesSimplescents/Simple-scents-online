@@ -130,13 +130,6 @@
     }) || candidates.find(el => /\$\d/.test(el.innerText || ''));
   }
 
-  function updateDisplayedPrice() {
-    const priceEl = findMainPriceElement();
-    if (priceEl) {
-      priceEl.innerText = `${money(selectedPrice)} · ${selectedSize} sample`;
-    }
-  }
-
   function setSelectedSize(size, price) {
     selectedSize = size;
     selectedPrice = Number(price);
@@ -144,12 +137,10 @@
     localStorage.setItem('simpleScentsSelectedPrice', String(selectedPrice));
     document.body.dataset.selectedSize = selectedSize;
     document.body.dataset.selectedPrice = String(selectedPrice);
-    updateDisplayedPrice();
   }
 
   function installSizeSelector() {
     if (document.querySelector('.ss-size-box')) {
-      updateDisplayedPrice();
       return;
     }
 
