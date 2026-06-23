@@ -27,6 +27,7 @@
     { keys: ['guess seductive homme'], one: 2.49, two: 3.99 },
     { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 2.49, two: 4.49 },
     { keys: ['winter discovery pack'], one: 26.99, two: 26.99 },
+    { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
   ];
 
 
@@ -51,6 +52,7 @@
     { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' },
     { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
     { keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
+    { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
   ];
 
 
@@ -346,7 +348,8 @@ if (info) {
 
 if (
   !titleClean.includes('fresh discovery pack') &&
-  !titleClean.includes('winter discovery pack')
+  !titleClean.includes('winter discovery pack') &&
+  !titleClean.includes('cheap winter discovery pack')
 ) {
   installSizeSelector();
 }
