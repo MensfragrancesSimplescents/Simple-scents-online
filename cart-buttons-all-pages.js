@@ -230,7 +230,12 @@ function setSelectedSize(size, price) {
 if (info) {
   info.insertAdjacentElement('beforebegin', box);
 } else {
-  document.body.appendChild(box);
+  const anchor = document.querySelector('.ss-bottom-bar');
+  if (anchor) {
+    anchor.insertAdjacentElement('beforebegin', box);
+  } else {
+    document.body.appendChild(box);
+  }
 }
 
     box.querySelectorAll('.ss-size-option').forEach(btn => {
