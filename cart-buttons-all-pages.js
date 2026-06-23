@@ -339,7 +339,10 @@ if (info) {
   `;
   document.head.appendChild(bottomStyle);
 
-  if (!titleClean.includes('fresh discovery pack')) {
+if (
+  !titleClean.includes('fresh discovery pack') &&
+  !titleClean.includes('winter discovery pack')
+) {
   installSizeSelector();
 }
 
