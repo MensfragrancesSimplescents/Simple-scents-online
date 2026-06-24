@@ -24,10 +24,10 @@
     { keys: ['mancera instant crush', 'instant crush'], one: 4.99, two: 7.99 },
     { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 2.49, two: 3.99 },
     { keys: ['nautica voyage'], one: 2.49, two: 3.99 },
-    { keys: ['guess seductive homme'], one: 2.49, two: 3.99 },
-   { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
-{ keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
-{ keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
+    { keys: ['guess seductive homme'], one: 2.49, two: 
+      { keys: ['fresh discovery pack'], one: 24.99, two: 24.99 },
+{ keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
+{ keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
   ];
 
 
@@ -50,10 +50,10 @@
     { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/tlrbQisJ', two: 'https://square.link/u/6NVnCXkp' },
     { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/wF47g4Dx', two: 'https://square.link/u/zM75zY0e' },
     { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' },
-    { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
-    { keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
-    { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
-  ];
+   { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
+{ keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
+{ keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
+ ];
 
 
 
