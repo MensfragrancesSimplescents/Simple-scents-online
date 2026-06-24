@@ -25,9 +25,9 @@
     { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 2.49, two: 3.99 },
     { keys: ['nautica voyage'], one: 2.49, two: 3.99 },
     { keys: ['guess seductive homme'], one: 2.49, two: 3.99 },
-    { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 2.49, two: 4.49 },
-    { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
-    { keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
+   { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
+{ keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
+{ keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
   ];
 
 
