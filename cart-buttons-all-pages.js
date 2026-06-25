@@ -29,6 +29,7 @@
     { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
     { keys: ['fresh discovery pack'], one: 22.99, two: 22.99 },
     { keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
+    { keys: ['cheap fresh discovery pack], one: 14.99, two: 14.99},
   ];
 
 
