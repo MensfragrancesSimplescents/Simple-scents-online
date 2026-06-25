@@ -55,6 +55,7 @@
     { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
     { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
     { keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
+    { keys: ['cheap fresh discovery pack'], one; 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
  ];
 
 
