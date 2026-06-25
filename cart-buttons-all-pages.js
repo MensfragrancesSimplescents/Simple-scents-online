@@ -29,7 +29,7 @@
     { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
     { keys: ['fresh discovery pack'], one: 22.99, two: 22.99 },
     { keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
-    { keys: ['cheap fresh discovery pack], one: 14.99, two: 14.99},
+    { keys: ['cheap fresh discovery pack'], one: 14.99, two: 14.99 },
   ];
 
 
@@ -55,7 +55,7 @@
     { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
     { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
     { keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
-    { keys: ['cheap fresh discovery pack'], one; 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
  ];
 
 
