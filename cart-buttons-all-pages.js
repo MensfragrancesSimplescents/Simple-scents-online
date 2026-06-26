@@ -27,7 +27,7 @@
     { keys: ['guess seductive homme'], one: 2.49, two: 3.99 },
     { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 2.49, two: 4.49 },
     { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
-    { keys: ['fresh discovery pack'], one: 22.99, two: 22.99 },
+    { keys: ['fresh discovery pack'], one: 14.99, two: 14.99 },
     { keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
     { keys: ['cheap fresh discovery pack'], one: 14.99, two: 14.99 },
   ];
@@ -35,26 +35,26 @@
 
 
   const SQUARE_LINKS = [
-    { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
-    { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4l8UD' },
-    { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
-    { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/Nm5h7bZJ', two: 'https://square.link/u/AcU2KGAr' },
-    { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/crwt7B6A', two: 'https://square.link/u/IMkUl9GB' },
-    { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 'https://square.link/u/OVkHLAQP', two: 'https://square.link/u/QgmcQcdk' },
-    { keys: ['guess seductive homme'], one: 'https://square.link/u/dqLsq39O', two: 'https://square.link/u/mWEmMUUj' },
-    { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/6IYkEL6D', two: 'https://square.link/u/gc8eDcmp' },
-    { keys: ['jpg le beau edt', 'jpg le beau'], one: 'https://square.link/u/pSJSc6Up', two: 'https://square.link/u/aqT1NUxy' },
-    { keys: ['jpg le male le parfum'], one: 'https://square.link/u/B0UfEWG3', two: 'https://square.link/u/erbxB7aj' },
-    { keys: ['jpg le male edt'], one: 'https://square.link/u/forYE1pR', two: 'https://square.link/u/V5Sg8NHV' },
-    { keys: ['mancera instant crush', 'instant crush'], one: 'https://square.link/u/ynoh8sUM', two: 'https://square.link/u/WQFo5fzE' },
-    { keys: ['nautica voyage'], one: 'https://square.link/u/grdqe0bB', two: 'https://square.link/u/9PDmNgnx' },
-    { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 'https://square.link/u/ObsdJ1PE', two: 'https://square.link/u/Coqo3qps' },
-    { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/tlrbQisJ', two: 'https://square.link/u/6NVnCXkp' },
-    { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/wF47g4Dx', two: 'https://square.link/u/zM75zY0e' },
-    { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/5YT3Iv35', two: 'https://square.link/u/kDzc3ExJ' },
-    { keys: ['fresh discovery pack'], one: 'https://square.link/u/EZXRgT5G', two: 'https://square.link/u/EZXRgT5G' },
-    { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/4k6lLFPF', two: 'https://square.link/u/4k6lLFPF' },
-    { keys: ['winter discovery pack'], one: 'https://square.link/u/HGl0tImQ', two: 'https://square.link/u/HGl0tImQ' },
+    { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['aromatic citrus pour homme', 'aromatic citrus'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['cremo spice black vanilla', 'cremo spice and black vanilla', 'cremo spice & black vanilla'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['guess seductive homme'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['invictus edt', 'invictus'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['jpg le beau edt', 'jpg le beau'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['jpg le male le parfum'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['jpg le male edt'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['mancera instant crush', 'instant crush'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['nautica voyage'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['pacific rock moss', 'goldfield banks pacific rock moss'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
  ];
 
@@ -73,7 +73,7 @@
   function squareLinkForProduct() {
     // Hard fix for Acqua/Aqua Di Gio Profondo so Safari never opens the bare code as a download.
     if ((titleClean.includes('acqua') || titleClean.includes('aqua')) && titleClean.includes('gio') && titleClean.includes('profondo')) {
-      return /^1/.test(String(selectedSize).trim()) ? 'https://square.link/u/pDDGO7sW' : 'https://square.link/u/wAd4l8UD';
+      return /^1/.test(String(selectedSize).trim()) ? 'https://square.link/u/bwCXghQ2' : 'https://square.link/u/bwCXghQ2';
     }
     const match = SQUARE_LINKS.find(row => row.keys.some(k => titleClean.includes(clean(k))));
     if (!match) return null;
