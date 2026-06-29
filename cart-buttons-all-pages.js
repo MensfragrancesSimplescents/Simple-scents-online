@@ -55,7 +55,7 @@
     { keys: ['fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
-    { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/5FQ7ga6a', two: 'https://square.link/u/5FQ7ga6a' },
  ];
 
 
