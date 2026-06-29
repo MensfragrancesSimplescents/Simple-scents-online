@@ -27,9 +27,9 @@
     { keys: ['guess seductive homme'], one: 2.49, two: 3.99 },
     { keys: ['armaf ventana pour homme', 'armaf ventana'], one: 2.49, two: 4.49 },
     { keys: ['cheap winter discovery pack'], one: 16.99, two: 16.99 },
+    { keys: ['cheap fresh discovery pack'], one: 14.99, two: 14.99 },
     { keys: ['fresh discovery pack'], one: 22.99, two: 22.99 },
     { keys: ['winter discovery pack'], one: 24.99, two: 24.99 },
-    { keys: ['cheap fresh discovery pack'], one: 14.99, two: 14.99 },
   ];
 
 
@@ -52,10 +52,10 @@
     { keys: ['paco rabanne 1 million edt', '1 million edt', 'one million'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['versace eros flame', 'eros flame'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['ysl myslf edp', 'ysl myself edp', 'ysl myself'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
+    { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/5FQ7ga6a', two: 'https://square.link/u/5FQ7ga6a' },
     { keys: ['fresh discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['cheap winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['winter discovery pack'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
-    { keys: ['cheap fresh discovery pack'], one: 'https://square.link/u/5FQ7ga6a', two: 'https://square.link/u/5FQ7ga6a' },
  ];
 
 
