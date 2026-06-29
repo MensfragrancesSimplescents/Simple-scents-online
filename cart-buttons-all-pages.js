@@ -274,6 +274,11 @@ if (info) {
   }
 
   function getBundleChoices() {
+    const checkedChoices = Array.from(document.querySelectorAll('.bundle-fragrance-check:checked'))
+      .map(input => String(input.value || '').trim())
+      .filter(Boolean);
+    if (checkedChoices.length) return checkedChoices;
+
     const selects = Array.from(document.querySelectorAll('.bundle-choice'));
     return selects.map(select => String(select.value || '').trim()).filter(Boolean);
   }

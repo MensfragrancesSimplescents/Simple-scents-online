@@ -9,25 +9,18 @@
 .custom-bundle-box{width:min(92%,640px);margin:18px auto 24px;padding:22px 24px;border:1px solid rgba(255,255,255,.22);border-radius:28px;background:#000;color:#fff;text-align:left;box-sizing:border-box;}
 .custom-bundle-box h2{text-align:center;margin:0 0 14px;font-size:26px;}
 .custom-bundle-box p{text-align:center;color:rgba(255,255,255,.78);font-size:17px;line-height:1.35;margin:0 0 18px;}
-.bundle-choice-label{display:block;font-size:17px;font-weight:900;margin:14px 0 7px;}
-.bundle-choice-button{width:100%;border:none;border-radius:16px;background:#fff;color:#000;padding:15px 14px;font-size:16px;font-weight:900;box-sizing:border-box;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.bundle-choice-button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.bundle-choice-button::after{content:'▾';font-size:18px;}
+.bundle-dropdown{position:relative;}
+.bundle-toggle{width:100%;border:none;border-radius:18px;background:#fff;color:#000;padding:16px 14px;font-size:17px;font-weight:900;text-align:left;box-sizing:border-box;cursor:pointer;}
+.bundle-toggle span{display:block;font-size:14px;font-weight:700;color:#555;margin-top:4px;line-height:1.3;}
+.bundle-menu{display:none;margin-top:10px;background:#111;border:1px solid rgba(255,255,255,.25);border-radius:18px;max-height:360px;overflow-y:auto;padding:10px;box-sizing:border-box;}
+.bundle-menu.open{display:block;}
+.bundle-option{display:flex;align-items:center;gap:10px;border-radius:14px;padding:12px 10px;margin:4px 0;background:#fff;color:#000;font-size:16px;font-weight:800;cursor:pointer;}
+.bundle-option input{width:20px;height:20px;accent-color:#000;}
+.bundle-count{margin:14px auto 0;text-align:center;font-size:16px;font-weight:900;color:#fff;}
+.bundle-selected-list{margin:14px 0 0;padding-left:22px;color:#fff;font-weight:800;line-height:1.5;}
 .bundle-warning{display:none;margin-top:16px;padding:12px;border-radius:14px;background:#3a0000;color:#fff;text-align:center;font-weight:800;line-height:1.35;}
 .bundle-ok{display:none;margin-top:16px;padding:12px;border-radius:14px;background:#0f3018;color:#fff;text-align:center;font-weight:800;line-height:1.35;}
 .size-pill{display:block;width:100%;max-width:260px;margin:18px auto 0;border:2px solid #fff;border-radius:999px;background:#fff;color:#000;font-size:20px;font-weight:900;padding:12px;text-align:center;}
-.picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:1000000;display:none;align-items:flex-end;justify-content:center;}
-.picker-overlay.open{display:flex;}
-.picker-panel{width:100%;max-width:650px;max-height:82vh;background:#111;color:#fff;border-radius:28px 28px 0 0;padding:18px 16px 24px;box-sizing:border-box;border:1px solid rgba(255,255,255,.2);}
-.picker-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
-.picker-title{font-size:22px;font-weight:900;}
-.picker-close{border:none;border-radius:999px;background:#fff;color:#000;font-size:18px;font-weight:900;padding:9px 14px;}
-.picker-search{width:100%;box-sizing:border-box;border:none;border-radius:14px;padding:14px 12px;font-size:17px;font-weight:700;margin-bottom:12px;}
-.picker-list{max-height:58vh;overflow-y:auto;display:grid;gap:8px;padding-bottom:8px;}
-.picker-option{width:100%;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:#fff;color:#000;padding:14px 12px;text-align:left;font-size:16px;font-weight:850;}
-.picker-option[disabled]{opacity:.35;text-decoration:line-through;}
-.picker-empty{display:none;text-align:center;color:rgba(255,255,255,.75);font-weight:800;padding:18px;}
-@media (max-width:480px){.custom-bundle-box{width:90%;padding:20px 18px;}.custom-bundle-box h2{font-size:22px;}.picker-panel{max-height:86vh;}}
 </style>
 </head>
 <body>
@@ -40,116 +33,79 @@
 <div class="swipe"><div class="slide"><img src="build-your-own-discovery-pack.jpg" alt="Build Your Own Discovery Pack"/></div></div>
 <div class="custom-bundle-box" id="customBundleBox">
 <h2>Choose your 3 fragrances</h2>
-<p>Tap each selection to see every fragrance. Search if needed. You cannot choose the same fragrance twice.</p>
-<label class="bundle-choice-label" for="bundleChoice1">Fragrance 1</label>
-<input type="hidden" class="bundle-choice" id="bundleChoice1" data-choice-number="1" value="">
-<button type="button" class="bundle-choice-button" data-target="bundleChoice1"><span>Select fragrance 1</span></button>
-<label class="bundle-choice-label" for="bundleChoice2">Fragrance 2</label>
-<input type="hidden" class="bundle-choice" id="bundleChoice2" data-choice-number="2" value="">
-<button type="button" class="bundle-choice-button" data-target="bundleChoice2"><span>Select fragrance 2</span></button>
-<label class="bundle-choice-label" for="bundleChoice3">Fragrance 3</label>
-<input type="hidden" class="bundle-choice" id="bundleChoice3" data-choice-number="3" value="">
-<button type="button" class="bundle-choice-button" data-target="bundleChoice3"><span>Select fragrance 3</span></button>
+<p>Tap the box below, then check exactly three different fragrances.</p>
+<div class="bundle-dropdown">
+<button type="button" class="bundle-toggle" id="bundleToggle">Choose 3 fragrances <span id="bundleToggleText">Nothing selected yet</span></button>
+<div class="bundle-menu" id="bundleMenu">
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="JPG Le Male Le Parfum"> JPG Le Male Le Parfum</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="JPG Le Male EDT"> JPG Le Male EDT</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="JPG Le Beau EDT"> JPG Le Beau EDT</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Pacific Rock Moss"> Pacific Rock Moss</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Acqua di Gio Profondo"> Acqua di Gio Profondo</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="YSL MYSLF EDP"> YSL MYSLF EDP</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Prada Luna Rossa Ocean"> Prada Luna Rossa Ocean</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Aromatic Citrus Pour Homme"> Aromatic Citrus Pour Homme</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Versace Eros Flame"> Versace Eros Flame</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Invictus EDT"> Invictus EDT</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Paco Rabanne 1 Million EDT"> Paco Rabanne 1 Million EDT</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Afnan 9PM"> Afnan 9PM</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Mancera Instant Crush"> Mancera Instant Crush</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Cremo Spice &amp; Black Vanilla"> Cremo Spice &amp; Black Vanilla</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Nautica Voyage"> Nautica Voyage</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Guess Seductive Homme"> Guess Seductive Homme</label>
+<label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Armaf Ventana Pour Homme"> Armaf Ventana Pour Homme</label>
+</div>
+</div>
+<div class="bundle-count" id="bundleCount">0 of 3 selected</div>
+<ul class="bundle-selected-list" id="bundleSelectedList"></ul>
 <div class="size-pill">2 mL each • $20.99</div>
-<div class="bundle-warning" id="bundleWarning">Please choose 3 different fragrances before buying or adding to cart.</div>
+<div class="bundle-warning" id="bundleWarning">Please choose exactly 3 different fragrances before buying or adding to cart.</div>
 <div class="bundle-ok" id="bundleOk">Selections saved.</div>
 </div>
-<div class="picker-overlay" id="fragrancePicker" aria-hidden="true">
-  <div class="picker-panel">
-    <div class="picker-top"><div class="picker-title" id="pickerTitle">Choose fragrance</div><button type="button" class="picker-close" id="pickerClose">Close</button></div>
-    <input class="picker-search" id="pickerSearch" type="search" placeholder="Search fragrances...">
-    <div class="picker-list" id="pickerList">
-      <button type="button" class="picker-option" data-fragrance="JPG Le Male Le Parfum">JPG Le Male Le Parfum</button>
-<button type="button" class="picker-option" data-fragrance="JPG Le Male EDT">JPG Le Male EDT</button>
-<button type="button" class="picker-option" data-fragrance="JPG Le Beau EDT">JPG Le Beau EDT</button>
-<button type="button" class="picker-option" data-fragrance="Pacific Rock Moss">Pacific Rock Moss</button>
-<button type="button" class="picker-option" data-fragrance="Acqua di Gio Profondo">Acqua di Gio Profondo</button>
-<button type="button" class="picker-option" data-fragrance="YSL MYSLF EDP">YSL MYSLF EDP</button>
-<button type="button" class="picker-option" data-fragrance="Prada Luna Rossa Ocean">Prada Luna Rossa Ocean</button>
-<button type="button" class="picker-option" data-fragrance="Aromatic Citrus Pour Homme">Aromatic Citrus Pour Homme</button>
-<button type="button" class="picker-option" data-fragrance="Versace Eros Flame">Versace Eros Flame</button>
-<button type="button" class="picker-option" data-fragrance="Invictus EDT">Invictus EDT</button>
-<button type="button" class="picker-option" data-fragrance="Paco Rabanne 1 Million EDT">Paco Rabanne 1 Million EDT</button>
-<button type="button" class="picker-option" data-fragrance="Afnan 9PM">Afnan 9PM</button>
-<button type="button" class="picker-option" data-fragrance="Mancera Instant Crush">Mancera Instant Crush</button>
-<button type="button" class="picker-option" data-fragrance="Cremo Spice &amp; Black Vanilla">Cremo Spice & Black Vanilla</button>
-<button type="button" class="picker-option" data-fragrance="Nautica Voyage">Nautica Voyage</button>
-<button type="button" class="picker-option" data-fragrance="Guess Seductive Homme">Guess Seductive Homme</button>
-<button type="button" class="picker-option" data-fragrance="Armaf Ventana Pour Homme">Armaf Ventana Pour Homme</button>
-    </div>
-    <div class="picker-empty" id="pickerEmpty">No fragrances found.</div>
-  </div>
-</div>
-<div class="info"><p><strong>USA only.</strong> No refunds.</p><p><strong>Text support:</strong> 916-749-8121</p></div>
 <script>
-(function(){
-  let activeInputId = '';
-  const picker = document.getElementById('fragrancePicker');
-  const pickerTitle = document.getElementById('pickerTitle');
-  const search = document.getElementById('pickerSearch');
-  const empty = document.getElementById('pickerEmpty');
-  const optionButtons = Array.from(document.querySelectorAll('.picker-option'));
-  const choiceButtons = Array.from(document.querySelectorAll('.bundle-choice-button'));
-  const choiceInputs = Array.from(document.querySelectorAll('.bundle-choice'));
+(function() {
+  const toggle = document.getElementById('bundleToggle');
+  const menu = document.getElementById('bundleMenu');
+  const checks = Array.from(document.querySelectorAll('.bundle-fragrance-check'));
+  const count = document.getElementById('bundleCount');
+  const selectedList = document.getElementById('bundleSelectedList');
+  const toggleText = document.getElementById('bundleToggleText');
+  const warning = document.getElementById('bundleWarning');
+  const ok = document.getElementById('bundleOk');
 
-  function selectedValues(exceptId){
-    return choiceInputs.filter(input => input.id !== exceptId).map(input => input.value).filter(Boolean);
+  function selectedChoices() {
+    return checks.filter(c => c.checked).map(c => c.value);
   }
 
-  function refreshOptionStates(){
-    const taken = selectedValues(activeInputId).map(v => v.toLowerCase());
-    const q = search.value.trim().toLowerCase();
-    let shown = 0;
-    optionButtons.forEach(btn => {
-      const name = btn.dataset.fragrance || btn.textContent.trim();
-      const matchesSearch = !q || name.toLowerCase().includes(q);
-      const isTaken = taken.includes(name.toLowerCase());
-      btn.disabled = isTaken;
-      btn.style.display = matchesSearch ? 'block' : 'none';
-      if (matchesSearch) shown++;
+  function updateBundleUI() {
+    const choices = selectedChoices();
+    count.textContent = choices.length + ' of 3 selected';
+    selectedList.innerHTML = choices.map(choice => '<li>' + choice + '</li>').join('');
+    toggleText.textContent = choices.length ? choices.join(' • ') : 'Nothing selected yet';
+    const valid = choices.length === 3;
+    if (warning) warning.style.display = choices.length > 0 && !valid ? 'block' : 'none';
+    if (ok) ok.style.display = valid ? 'block' : 'none';
+  }
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => menu.classList.toggle('open'));
+  }
+
+  checks.forEach(check => {
+    check.addEventListener('change', () => {
+      const choices = selectedChoices();
+      if (choices.length > 3) {
+        check.checked = false;
+        alert('You can only choose 3 fragrances for this bundle.');
+      }
+      updateBundleUI();
     });
-    empty.style.display = shown ? 'none' : 'block';
-  }
+  });
 
-  function updateVisibleButtons(){
-    choiceButtons.forEach(btn => {
-      const input = document.getElementById(btn.dataset.target);
-      const num = input.dataset.choiceNumber;
-      btn.querySelector('span').textContent = input.value || `Select fragrance ${num}`;
-    });
-    choiceInputs.forEach(input => input.dispatchEvent(new Event('change', {bubbles:true})));
-  }
-
-  function openPicker(inputId){
-    activeInputId = inputId;
-    const input = document.getElementById(inputId);
-    pickerTitle.textContent = `Choose fragrance ${input.dataset.choiceNumber}`;
-    search.value = '';
-    picker.classList.add('open');
-    picker.setAttribute('aria-hidden','false');
-    refreshOptionStates();
-    setTimeout(() => search.focus(), 50);
-  }
-
-  function closePicker(){
-    picker.classList.remove('open');
-    picker.setAttribute('aria-hidden','true');
-    activeInputId = '';
-  }
-
-  choiceButtons.forEach(btn => btn.addEventListener('click', () => openPicker(btn.dataset.target)));
-  document.getElementById('pickerClose').addEventListener('click', closePicker);
-  picker.addEventListener('click', e => { if (e.target === picker) closePicker(); });
-  search.addEventListener('input', refreshOptionStates);
-  optionButtons.forEach(btn => btn.addEventListener('click', () => {
-    if (btn.disabled || !activeInputId) return;
-    document.getElementById(activeInputId).value = btn.dataset.fragrance;
-    updateVisibleButtons();
-    closePicker();
-  }));
-  updateVisibleButtons();
+  updateBundleUI();
 })();
 </script>
+<div class="info"><p><strong>USA only.</strong> No refunds.</p><p><strong>Text support:</strong> 916-749-8121</p></div>
 <script src="cart-buttons-all-pages.js"></script>
 <script src="checkout-redirect.js"></script>
 </main></body>
