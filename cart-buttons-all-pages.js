@@ -331,7 +331,7 @@ if (info) {
     }
 
     saveCart();
-    alert(`${title} ${selectedSize} added to cart.`);
+    alert(isBuildYourOwnPack() ? `${title} added to cart.` : `${title} ${selectedSize} added to cart.`);
   }
 
   function buyNow(event) {
