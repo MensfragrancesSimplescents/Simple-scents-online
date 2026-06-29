@@ -153,6 +153,7 @@
     const SHIPPING_FEE = 6.00;
 
     const SQUARE_LINKS = [
+      { keys: ['build your own discovery pack'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
       { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
       { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4l8UD' },
       { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/6KWNznZY', two: 'https://square.link/u/cBtv4SZA' },
@@ -341,6 +342,9 @@
         shipping: "$" + shipping.toFixed(2),
         orderTotal: "$" + finalTotal.toFixed(2),
         orderItems,
+        bundleChoice1: checkoutItems[0]?.bundleChoice1 || '',
+        bundleChoice2: checkoutItems[0]?.bundleChoice2 || '',
+        bundleChoice3: checkoutItems[0]?.bundleChoice3 || '',
         squarePaymentLink: paymentLinks,
         paymentStatus: "Order info sent to Formspree before redirecting to Square"
       };

@@ -9,6 +9,7 @@
   }
 
   const PRICE_MAP = [
+    { keys: ['build your own discovery pack'], one: 20.99, two: 20.99 },
     { keys: ['jpg le male le parfum'], one: 4.49, two: 7.99 },
     { keys: ['jpg le male edt'], one: 3.49, two: 6.99 },
     { keys: ['jpg le beau edt', 'jpg le beau'], one: 4.49, two: 6.49 },
@@ -35,6 +36,7 @@
 
 
   const SQUARE_LINKS = [
+    { keys: ['build your own discovery pack'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
     { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
@@ -262,21 +264,60 @@ if (info) {
 
   function sameProduct(a, b) {
     return String(a.name || '').trim().toLowerCase() === String(b.name || '').trim().toLowerCase() &&
-      String(a.size || '').trim().toLowerCase() === String(b.size || '').trim().toLowerCase();
+      String(a.size || '').trim().toLowerCase() === String(b.size || '').trim().toLowerCase() &&
+      String(a.bundleChoicesText || '').trim().toLowerCase() === String(b.bundleChoicesText || '').trim().toLowerCase();
+  }
+
+
+  function isBuildYourOwnPack() {
+    return titleClean.includes('build your own discovery pack');
+  }
+
+  function getBundleChoices() {
+    const selects = Array.from(document.querySelectorAll('.bundle-choice'));
+    return selects.map(select => String(select.value || '').trim()).filter(Boolean);
+  }
+
+  function bundleChoicesAreValid(showAlert) {
+    if (!isBuildYourOwnPack()) return true;
+    const choices = getBundleChoices();
+    const warning = document.getElementById('bundleWarning');
+    const ok = document.getElementById('bundleOk');
+    const unique = Array.from(new Set(choices.map(choice => choice.toLowerCase())));
+    const valid = choices.length === 3 && unique.length === 3;
+    if (warning) warning.style.display = valid ? 'none' : 'block';
+    if (ok) ok.style.display = valid ? 'block' : 'none';
+    if (!valid && showAlert) alert('Please choose 3 different fragrances for your Build Your Own Discovery Pack.');
+    return valid;
+  }
+
+  document.querySelectorAll('.bundle-choice').forEach(select => {
+    select.addEventListener('change', () => bundleChoicesAreValid(false));
+  });
+
+  function bundleChoicesText(choices) {
+    return choices && choices.length ? choices.join(' | ') : '';
   }
 
   function currentProduct() {
+    const choices = isBuildYourOwnPack() ? getBundleChoices() : [];
     return {
       name: title,
       price: selectedPrice.toFixed(2),
-      size: selectedSize + ' sample',
+      size: isBuildYourOwnPack() ? '2 mL each' : selectedSize + ' sample',
       page: window.location.pathname,
       squareUrl: squareLinkForProduct(),
+      bundleChoices: choices,
+      bundleChoice1: choices[0] || '',
+      bundleChoice2: choices[1] || '',
+      bundleChoice3: choices[2] || '',
+      bundleChoicesText: bundleChoicesText(choices),
       qty: 1
     };
   }
 
   function addToCart() {
+    if (!bundleChoicesAreValid(true)) return;
     const product = currentProduct();
     const existingItem = cart.find(item => sameProduct(item, product));
 
@@ -299,6 +340,7 @@ if (info) {
       event.stopPropagation();
     }
 
+    if (!bundleChoicesAreValid(true)) return;
     const product = currentProduct();
     if (!product.squareUrl) {
       alert('Square checkout link is missing for this fragrance.');
@@ -350,6 +392,7 @@ if (info) {
   document.head.appendChild(bottomStyle);
 
 if (
+  !titleClean.includes('build your own discovery pack') &&
   !titleClean.includes('fresh discovery pack') &&
   !titleClean.includes('winter discovery pack') &&
   !titleClean.includes('cheap winter discovery pack')

@@ -221,7 +221,8 @@ function simpleScentsCorrectPriceText(item) {
 
     function sameProduct(a, b) {
       return String(a.name || "").trim().toLowerCase() === String(b.name || "").trim().toLowerCase()
-        && String(a.size || "").trim().toLowerCase() === String(b.size || "").trim().toLowerCase();
+        && String(a.size || "").trim().toLowerCase() === String(b.size || "").trim().toLowerCase()
+        && String(a.bundleChoicesText || "").trim().toLowerCase() === String(b.bundleChoicesText || "").trim().toLowerCase();
     }
 
     function combineMatchingItems() {
@@ -258,11 +259,14 @@ function simpleScentsCorrectPriceText(item) {
         const price = simpleScentsCorrectPrice(item);
         const qty = item.qty || 1;
         total += price * qty;
+        const choices = Array.isArray(item.bundleChoices) ? item.bundleChoices.filter(Boolean) : [item.bundleChoice1, item.bundleChoice2, item.bundleChoice3].filter(Boolean);
+        const choicesHtml = choices.length ? `<p style="margin-top:8px;line-height:1.35;">Includes:<br>• ${choices.join('<br>• ')}</p>` : '';
         return `
           <div class="item cart-item">
             <div class="cart-info">
               <h2>${item.name}</h2>
               <p>$${price.toFixed(2)} • ${item.size || "2ml sample"} • Qty: ${item.qty || 1}</p>
+              ${choicesHtml}
             </div>
             <div class="qty-box">
 <button class="qty-btn" onclick="changeQty(${index},-1)">−</button>
