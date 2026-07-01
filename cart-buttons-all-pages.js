@@ -9,7 +9,7 @@
   }
 
   const PRICE_MAP = [
-    { keys: ['build your own discovery pack (3 pack)'], one: 20.99, two: 20.99 },
+    { keys: ['build your own discovery 3 pack'], one: 20.99, two: 20.99 },
     { keys: ['jpg le male le parfum'], one: 4.49, two: 7.99 },
     { keys: ['jpg le male edt'], one: 3.49, two: 6.99 },
     { keys: ['jpg le beau edt', 'jpg le beau'], one: 4.49, two: 6.49 },
@@ -36,7 +36,7 @@
 
 
   const SQUARE_LINKS = [
-    { keys: ['build your own discovery pack (3 pack)'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
+    { keys: ['build your own discovery 3 pack'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
     { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['afnan 9pm', '9pm'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
