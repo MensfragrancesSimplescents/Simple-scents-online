@@ -153,6 +153,7 @@
     const SHIPPING_FEE = 6.00;
 
     const SQUARE_LINKS = [
+      { keys: ['build your own discovery 5 pack'], one: 'https://square.link/u/xtfWxPJ4', two: 'https://square.link/u/xtfWxPJ4' },
       { keys: ['build your own discovery pack'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
       { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/buPnGvip', two: 'https://square.link/u/yZkcB0i8' },
       { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/pDDGO7sW', two: 'https://square.link/u/wAd4l8UD' },
@@ -323,7 +324,9 @@
       }
 
       const orderItems = checkoutItems.map(item => {
-        return `${item.name || "Item"} (${item.size || "sample"}) x${item.qty || 1} - $${simpleScentsCorrectPrice(item).toFixed(2)}`;
+        const choices = Array.isArray(item.bundleChoices) ? item.bundleChoices.filter(Boolean) : [item.bundleChoice1, item.bundleChoice2, item.bundleChoice3, item.bundleChoice4, item.bundleChoice5].filter(Boolean);
+        const choiceText = choices.length ? ` | Choices: ${choices.join(', ')}` : '';
+        return `${item.name || "Item"} (${item.size || "sample"}) x${item.qty || 1} - $${simpleScentsCorrectPrice(item).toFixed(2)}${choiceText}`;
       }).join("\n");
 
       const paymentLinks = checkoutItems.map(item => squareLinkForItem(item)).filter(Boolean).join("\n");
@@ -345,6 +348,9 @@
         bundleChoice1: checkoutItems[0]?.bundleChoice1 || '',
         bundleChoice2: checkoutItems[0]?.bundleChoice2 || '',
         bundleChoice3: checkoutItems[0]?.bundleChoice3 || '',
+        bundleChoice4: checkoutItems[0]?.bundleChoice4 || '',
+        bundleChoice5: checkoutItems[0]?.bundleChoice5 || '',
+        bundleChoicesText: checkoutItems[0]?.bundleChoicesText || '',
         squarePaymentLink: paymentLinks,
         paymentStatus: "Order info sent to Formspree before redirecting to Square"
       };

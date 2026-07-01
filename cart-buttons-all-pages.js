@@ -9,6 +9,7 @@
   }
 
   const PRICE_MAP = [
+    { keys: ['build your own discovery 5 pack'], one: 29.99, two: 29.99 },
     { keys: ['build your own discovery 3 pack'], one: 20.99, two: 20.99 },
     { keys: ['jpg le male le parfum'], one: 4.49, two: 7.99 },
     { keys: ['jpg le male edt'], one: 3.49, two: 6.99 },
@@ -36,6 +37,7 @@
 
 
   const SQUARE_LINKS = [
+    { keys: ['build your own discovery 5 pack'], one: 'https://square.link/u/xtfWxPJ4', two: 'https://square.link/u/xtfWxPJ4' },
     { keys: ['build your own discovery 3 pack'], one: 'https://square.link/u/OabVDhcz', two: 'https://square.link/u/OabVDhcz' },
     { keys: ['prada luna rossa ocean', 'prada ocean'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
     { keys: ['acqua di gio profondo edp', 'acqua di gio profondo', 'aqua di gio profondo', 'aqua de gio profondo', 'acqua geo profondo', 'aqua geo profondo'], one: 'https://square.link/u/bwCXghQ2', two: 'https://square.link/u/bwCXghQ2' },
@@ -270,7 +272,11 @@ if (info) {
 
 
   function isBuildYourOwnPack() {
-    return titleClean.includes('build your own discovery pack');
+    return titleClean.includes('build your own discovery pack') || titleClean.includes('build your own discovery 3 pack') || titleClean.includes('build your own discovery 5 pack');
+  }
+
+  function requiredBundleCount() {
+    return titleClean.includes('build your own discovery 5 pack') ? 5 : 3;
   }
 
   function getBundleChoices() {
@@ -289,10 +295,11 @@ if (info) {
     const warning = document.getElementById('bundleWarning');
     const ok = document.getElementById('bundleOk');
     const unique = Array.from(new Set(choices.map(choice => choice.toLowerCase())));
-    const valid = choices.length === 3 && unique.length === 3;
+    const needed = requiredBundleCount();
+    const valid = choices.length === needed && unique.length === needed;
     if (warning) warning.style.display = valid ? 'none' : 'block';
     if (ok) ok.style.display = valid ? 'block' : 'none';
-    if (!valid && showAlert) alert('Please choose 3 different fragrances for your Build Your Own Discovery Pack.');
+    if (!valid && showAlert) alert('Please choose ' + needed + ' different fragrances for your ' + title + '.');
     return valid;
   }
 
@@ -316,6 +323,8 @@ if (info) {
       bundleChoice1: choices[0] || '',
       bundleChoice2: choices[1] || '',
       bundleChoice3: choices[2] || '',
+      bundleChoice4: choices[3] || '',
+      bundleChoice5: choices[4] || '',
       bundleChoicesText: bundleChoicesText(choices),
       qty: 1
     };
@@ -397,7 +406,7 @@ if (info) {
   document.head.appendChild(bottomStyle);
 
 if (
-  !titleClean.includes('build your own discovery pack') &&
+  !isBuildYourOwnPack() &&
   !titleClean.includes('fresh discovery pack') &&
   !titleClean.includes('winter discovery pack') &&
   !titleClean.includes('cheap winter discovery pack')

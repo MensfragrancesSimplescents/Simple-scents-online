@@ -28,15 +28,15 @@
 <main class="product-page">
 <a class="back" href="index.html">← Back to all fragrances</a>
 <h1 class="product-title">Build Your Own Discovery 5 Pack</h1>
-<p class="price">$20.99 • 2 mL each</p>
+<p class="price">$29.99 • 2 mL each</p>
 <p class="notes">Pick any 5 fragrances from the collection. All samples in this bundle are 2 mL.</p>
 <div class="swipe">
 <div class="slide"><img src="build-your-own-discovery-5-pack.jpg" alt="Build Your Own Discovery Pack"/></div>
-<div class="slide"><img src="2ml-bottle.jpg" alt="2 mL Sample Bottle"/></div>
+<div class="slide"><img src="build-your-own-discovery-5-pack-2ml.jpg" alt="2 mL Sample Bottle"/></div>
 </div>
 <div class="custom-bundle-box" id="customBundleBox">
 <h2>Choose your 5 fragrances</h2>
-<p>Tap the box below, then check exactly three different fragrances.</p>
+<p>Tap the box below, then check exactly five different fragrances.</p>
 <div class="bundle-dropdown">
 <button type="button" class="bundle-toggle" id="bundleToggle">Choose 5 fragrances <span id="bundleToggleText">Nothing selected yet</span></button>
 <div class="bundle-menu" id="bundleMenu">
@@ -59,9 +59,9 @@
 <label class="bundle-option"><input type="checkbox" class="bundle-fragrance-check" value="Armaf Ventana Pour Homme"> Armaf Ventana Pour Homme</label>
 </div>
 </div>
-<div class="bundle-count" id="bundleCount">0 of 3 selected</div>
+<div class="bundle-count" id="bundleCount">0 of 5 selected</div>
 <ul class="bundle-selected-list" id="bundleSelectedList"></ul>
-<div class="size-pill">2 mL each • $20.99</div>
+<div class="size-pill">2 mL each • $29.99</div>
 <div class="bundle-warning" id="bundleWarning">Please choose exactly 5 different fragrances before buying or adding to cart.</div>
 <div class="bundle-ok" id="bundleOk">Selections saved.</div>
 </div>
@@ -82,7 +82,7 @@
 
   function updateBundleUI() {
     const choices = selectedChoices();
-    count.textContent = choices.length + ' of 3 selected';
+    count.textContent = choices.length + ' of 5 selected';
     selectedList.innerHTML = choices.map(choice => '<li>' + choice + '</li>').join('');
     toggleText.textContent = choices.length ? choices.join(' • ') : 'Nothing selected yet';
     const valid = choices.length === 5;
@@ -97,7 +97,7 @@
   checks.forEach(check => {
     check.addEventListener('change', () => {
       const choices = selectedChoices();
-      if (choices.length > 3) {
+      if (choices.length > 5) {
         check.checked = false;
         alert('You can only choose 5 fragrances for this bundle.');
       }

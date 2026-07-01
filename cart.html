@@ -259,7 +259,7 @@ function simpleScentsCorrectPriceText(item) {
         const price = simpleScentsCorrectPrice(item);
         const qty = item.qty || 1;
         total += price * qty;
-        const choices = Array.isArray(item.bundleChoices) ? item.bundleChoices.filter(Boolean) : [item.bundleChoice1, item.bundleChoice2, item.bundleChoice3].filter(Boolean);
+        const choices = Array.isArray(item.bundleChoices) ? item.bundleChoices.filter(Boolean) : [item.bundleChoice1, item.bundleChoice2, item.bundleChoice3, item.bundleChoice4, item.bundleChoice5].filter(Boolean);
         const choicesHtml = choices.length ? `<p style="margin-top:8px;line-height:1.35;">Includes:<br>• ${choices.join('<br>• ')}</p>` : '';
         return `
           <div class="item cart-item">
